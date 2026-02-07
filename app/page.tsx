@@ -1,3 +1,7 @@
 export default function Page() {
-  return <h1>Jack Brind</h1>;
+  return (
+    <div>
+      <h1>Home page</h1>
+    </div>
+  );
 }
