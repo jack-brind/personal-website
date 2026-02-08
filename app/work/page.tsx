@@ -1,15 +1,21 @@
 import Link from "next/link";
+import { getAllContent } from "@/lib/content";
 
-function page() {
+async function WorkPage() {
+  const caseStudies = await getAllContent("case-studies");
+
   return (
     <div>
       <h1>Work</h1>
       <nav className="flex flex-col gap-5">
-        <Link href="/work/pandadoc">PandaDoc Case Study</Link>
-        <Link href="/work/itris">itris Case Study</Link>
+        {caseStudies.map((caseStudy) => (
+          <Link key={caseStudy.slug} href={`/work/${caseStudy.slug}`}>
+            {caseStudy.title}
+          </Link>
+        ))}
       </nav>
     </div>
   );
 }
 
-export default page;
+export default WorkPage;

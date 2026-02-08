@@ -15,9 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="flex flex-col gap-12">
-        <Navigation />
-        <main className="p-6">{children}</main>
+      <body className="flex flex-col gap-12 w-3xl m-auto min-h-screen">
+        <Navigation/>
+        <main className="p-6 flex-1">{children}</main>
         <Footer />
       </body>
     </html>

@@ -1,9 +1,19 @@
 import Link from "next/link";
+import Image from "next/image";
 
 function Navigation() {
   return (
     <header className="flex items-center justify-between p-6">
-      <Link href="/">Jack Brind</Link>
+      <Link href="/" className="flex items-center gap-3">
+        <Image
+          src="/favicon.ico"
+          alt="Site logo"
+          width={24}
+          height={24}
+          priority
+        />
+        Jack Brind ∙ Product Designer
+      </Link>
 
       <nav>
         <ul className="flex items-center gap-6">
