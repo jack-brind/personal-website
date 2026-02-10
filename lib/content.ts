@@ -74,15 +74,26 @@ export async function getAllContent(type: string): Promise<ContentItem[]> {
   });
 }
 
+export async function getAllSlugs(type: string): Promise<string[]> {
+  const fileNames = await readDirectory(`/content/${type}`);
+  return fileNames
+    .filter((name) => name.endsWith(".mdx"))
+    .map((name) => name.replace(".mdx", ""));
+}
+
 export async function getContentBySlug(
   type: string,
   slug: string,
-): Promise<{ frontmatter: ContentFrontmatter; content: string }> {
-  const rawContent: string = await readFile(`/content/${type}/${slug}.mdx`);
-  const { data: frontmatter, content } = matter(rawContent) as unknown as {
-    data: ContentFrontmatter;
-    content: string;
-  };
+): Promise<{ frontmatter: ContentFrontmatter; content: string } | null> {
+  try {
+    const rawContent: string = await readFile(`/content/${type}/${slug}.mdx`);
+    const { data: frontmatter, content } = matter(rawContent) as unknown as {
+      data: ContentFrontmatter;
+      content: string;
+    };
 
-  return { frontmatter, content };
+    return { frontmatter, content };
+  } catch {
+    return null;
+  }
 }

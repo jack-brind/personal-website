@@ -24,7 +24,7 @@ function Navigation() {
             <Link href="/side-projects">Side projects</Link>
           </li>
           <li>
-            <Link href="/writing">Writing</Link>
+            <Link href="/writing">Notes</Link>
           </li>
           <li>
             <Link href="/about">About</Link>

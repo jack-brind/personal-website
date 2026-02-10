@@ -1,8 +1,11 @@
 import { getContentBySlug } from "@/lib/content";
+import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 
 async function ColophonPage() {
-  const { frontmatter, content } = await getContentBySlug("pages", "colophon");
+  const result = await getContentBySlug("pages", "colophon");
+  if (!result) notFound();
+  const { frontmatter, content } = result;
   return (
     <article>
       <h1>{frontmatter.title}</h1>

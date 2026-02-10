@@ -1,1 +1,178 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
+  --font-serif: var(--font-serif), ui-serif, Georgia, serif;
+}
+
+/* Typography */
+/* 48px */
+@utility text-display-xl {
+  font-size: 3rem;
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+  font-weight: 600;
+  text-rendering: optimizeLegibility;
+}
+
+/* 32px */
+@utility text-display-lg {
+  font-size: 2rem;
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  text-wrap: pretty;
+  text-rendering: optimizeLegibility;
+}
+
+/* 24px */
+@utility text-display-md {
+  font-size: 1.5rem;
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.016em;
+  line-height: 1.33;
+  text-wrap: pretty;
+  text-rendering: optimizeLegibility;
+}
+
+/* 20px */
+@utility text-display-sm {
+  font-size: 1.25rem;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  line-height: 1.4;
+  text-wrap: pretty;
+  text-rendering: optimizeLegibility;
+}
+
+/* 16px base */
+@utility text-body {
+  font-size: 1rem;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.625;
+  letter-spacing: -0.011em;
+  word-break: break-word;
+  text-wrap: pretty;
+}
+
+/* 14px */
+@utility text-body-sm {
+  font-size: 0.875rem;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  word-break: break-word;
+  text-wrap: pretty;
+}
+
+/* 14px */
+@utility text-caption {
+  font-size: 0.875rem;
+  font-family: var(--font-serif), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.4;
+  word-break: break-word;
+  text-wrap: pretty;
+}
+
+.light {
+  /* Semantic light colours */
+  --bg-default: oklch(0.99 0 0);
+  --bg-elevated: oklch(1 0 0);
+  --bg-sunken: oklch(0.97 0 0);
+  --fg-primary: oklch(0.33 0.013 273);
+  --fg-secondary: oklch(0.54 0.012 262);
+  --fg-muted: oklch(0.67 0.013 260);
+  --fg-accent: oklch(0.47 0.18 263);
+  --border: oklch(0.33 0.013 273 / 12%);
+  --selection: oklch(0.33 0.013 273 /16%);
+}
+
+/* Semantic dark colours */
+.dark {
+  --bg-default: oklch(0.16 0 0);
+  --bg-elevated: oklch(0.2 0 264);
+  --bg-sunken: oklch(0.14 0 0);
+  --fg-primary: oklch(0.86 0 259);
+  --fg-secondary: oklch(0.69 0.012 262);
+  --fg-muted: oklch(0.67 0.013 260);
+  --fg-accent: oklch(0.67 0.15 265);
+  --border: oklch(0.86 0 259 / 75%);
+  --selection: oklch(0.86 0 259 / 75%);
+}
+
+/* Theme variables */
+@theme inline {
+  /* Background colours */
+  --color-default: var(--bg-default);
+  --color-elevated: var(--bg-elevated);
+  --color-sunken: var(--bg-sunken);
+
+  /* Text colours */
+  --color-primary: var(--fg-primary);
+  --color-secondary: var(--fg-secondary);
+  --color-muted: var(--fg-muted);
+  --color-accent: var(--fg-accent);
+
+  /* Border colours */
+  --color-border: var(--border);
+
+  /* Selection colour */
+  --color-selection: var(--selection);
+}
+
+@layer base {
+  html {
+    @apply bg-default;
+    color-scheme: light dark;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    @apply text-primary;
+    text-rendering: optimizeSpeed;
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings:
+      "cv01" 1,
+      "ss03" 1,
+      "kern" 1,
+      "liga" 1;
+    font-variation-settings: "opsz" auto;
+  }
+
+  p {
+    @apply text-body;
+  }
+
+  h1 {
+    @apply text-display-lg;
+  }
+
+  h2 {
+    @apply text-display-md;
+  }
+
+  h3 {
+    @apply text-display-sm;
+  }
+
+  *,
+  ::before,
+  ::after {
+    @apply border-border;
+  }
+
+  ::selection {
+    @apply bg-selection;
+  }
+}
