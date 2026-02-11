@@ -1,8 +1,11 @@
 import { getContentBySlug } from "@/lib/content";
+import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 
 async function PrivacyPage() {
-  const { frontmatter, content } = await getContentBySlug("pages", "privacy");
+  const result = await getContentBySlug("pages", "privacy");
+  if (!result) notFound();
+  const { frontmatter, content } = result;
   return (
     <article>
       <h1>{frontmatter.title}</h1>

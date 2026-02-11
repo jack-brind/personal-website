@@ -1,21 +1,22 @@
-import { getContentBySlug, getAllContent } from "@/lib/content";
-import { MDXRemote } from "next-mdx-remote/rsc";
+import { getContentBySlug, getAllSlugs } from "@/lib/content";
+import { notFound } from "next/navigation";
+import MDXContent from "@/components/MDXContent";
 
 export async function generateStaticParams() {
-  const articles = await getAllContent("writing");
-  return articles.map((article) => ({
-    slug: article.slug,
-  }));
+  const slugs = await getAllSlugs("writing");
+  return slugs.map((slug) => ({ slug }));
 }
 
 async function WritingPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const { frontmatter, content } = await getContentBySlug("writing", slug);
+  const result = await getContentBySlug("writing", slug);
+  if (!result) notFound();
+  const { frontmatter, content } = result;
   return (
     <article>
-      <h1>{frontmatter.title}</h1>
+      <h1 className="text-display-xl">{frontmatter.title}</h1>
       <p>{frontmatter.description}</p>
-      <MDXRemote source={content} />
+      <MDXContent source={content} />
     </article>
   );
 }

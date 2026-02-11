@@ -1,11 +1,10 @@
-import { getContentBySlug, getAllContent } from "@/lib/content";
+import { getContentBySlug, getAllSlugs } from "@/lib/content";
+import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 
 export async function generateStaticParams() {
-  const caseStudies = await getAllContent("case-studies");
-  return caseStudies.map((study) => ({
-    slug: study.slug,
-  }));
+  const slugs = await getAllSlugs("case-studies");
+  return slugs.map((slug) => ({ slug }));
 }
 
 async function CaseStudyPage({
@@ -14,11 +13,13 @@ async function CaseStudyPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const { frontmatter, content } = await getContentBySlug("case-studies", slug);
+  const result = await getContentBySlug("case-studies", slug);
+  if (!result) notFound();
+  const { frontmatter, content } = result;
   return (
     <article>
-      <h1>{frontmatter.title}</h1>
-      <p>{frontmatter.description}</p>
+      <h1 className="text-display-xl">{frontmatter.title}</h1>
+      <p className="mb-12">{frontmatter.description}</p>
       <MDXRemote source={content} />
     </article>
   );
