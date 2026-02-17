@@ -6,6 +6,7 @@ interface BaseFrontmatter {
   title: string;
   description: string;
   date?: string;
+  image?: string;
   readtime?: number;
   ogImage?: string;
   ogTitle?: string;
@@ -33,15 +34,11 @@ interface ArticleFrontmatter extends BaseFrontmatter {
   category?: string[];
 }
 
-type ContentFrontmatter =
-  | CaseStudyFrontmatter
-  | SideProjectFrontmatter
-  | ArticleFrontmatter
-  | BaseFrontmatter;
+export type CaseStudyItem = CaseStudyFrontmatter & { slug: string };
+export type SideProjectItem = SideProjectFrontmatter & { slug: string };
+export type ArticleItem = ArticleFrontmatter & { slug: string };
 
-type ContentItem = ContentFrontmatter & {
-  slug: string;
-};
+export type ContentItem = CaseStudyItem | SideProjectItem | ArticleItem;
 
 function readFile(localPath: string): Promise<string> {
   return fs.readFile(path.join(process.cwd(), localPath), "utf-8");
@@ -58,12 +55,12 @@ export async function getAllContent(type: string): Promise<ContentItem[]> {
   for (const fileName of fileNames) {
     const rawContent: string = await readFile(`/content/${type}/${fileName}`);
     const { data: frontmatter } = matter(rawContent) as unknown as {
-      data: ContentFrontmatter;
+      data: Omit<ContentItem, "slug">;
     };
 
     items.push({
-      slug: fileName.replace(".mdx", ""),
       ...frontmatter,
+      slug: fileName.replace(".mdx", ""),
     });
   }
 
@@ -84,11 +81,11 @@ export async function getAllSlugs(type: string): Promise<string[]> {
 export async function getContentBySlug(
   type: string,
   slug: string,
-): Promise<{ frontmatter: ContentFrontmatter; content: string } | null> {
+): Promise<{ frontmatter: Omit<ContentItem, "slug">; content: string } | null> {
   try {
     const rawContent: string = await readFile(`/content/${type}/${slug}.mdx`);
     const { data: frontmatter, content } = matter(rawContent) as unknown as {
-      data: ContentFrontmatter;
+      data: Omit<ContentItem, "slug">;
       content: string;
     };
 

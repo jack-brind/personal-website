@@ -1,36 +1,60 @@
 import Link from "next/link";
 import Image from "next/image";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "./ui/Breadcrumb";
 
-function Navigation() {
+function Navigation({ isHome = false }: { isHome: boolean }) {
+  if (isHome)
+    return (
+      <header>
+        <Link href="/" className="flex flex-col gap-3">
+          <div className="mb-8 w-10 h-10 rounded-full border border-black/12 overflow-hidden">
+            <Image
+              src="/profile-image-light.png"
+              alt="Profile photo of Jack Brind"
+              width={40}
+              height={40}
+              priority
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </Link>
+        <div className="flex flex-col">
+          <h1 className="text-display-sm font-semibold">Jack Brind</h1>
+          <h2 className="text-body text-secondary font-medium">
+            Product Designer
+          </h2>
+        </div>
+      </header>
+    );
+
   return (
-    <header className="flex items-center justify-between p-6">
-      <Link href="/" className="flex items-center gap-3">
-        <Image
-          src="/favicon.ico"
-          alt="Site logo"
-          width={24}
-          height={24}
-          priority
-        />
-        Jack Brind ∙ Product Designer
-      </Link>
-
-      <nav>
-        <ul className="flex items-center gap-6">
-          <li>
-            <Link href="/work">Work</Link>
-          </li>
-          <li>
-            <Link href="/side-projects">Side projects</Link>
-          </li>
-          <li>
-            <Link href="/writing">Notes</Link>
-          </li>
-          <li>
-            <Link href="/about">About</Link>
-          </li>
-        </ul>
-      </nav>
+    <header>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <Link href="/" className="flex items-center gap-3">
+              <Image
+                src="/profile-image-light.png"
+                alt="Profile photo of Jack Brind"
+                width={24}
+                height={24}
+                priority
+              />
+              Home
+            </Link>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Page</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
     </header>
   );
 }

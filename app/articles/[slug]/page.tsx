@@ -3,13 +3,13 @@ import { notFound } from "next/navigation";
 import MDXContent from "@/components/MDXContent";
 
 export async function generateStaticParams() {
-  const slugs = await getAllSlugs("writing");
+  const slugs = await getAllSlugs("articles");
   return slugs.map((slug) => ({ slug }));
 }
 
-async function WritingPage({ params }: { params: Promise<{ slug: string }> }) {
+async function ArticlesPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const result = await getContentBySlug("writing", slug);
+  const result = await getContentBySlug("articles", slug);
   if (!result) notFound();
   const { frontmatter, content } = result;
   return (
@@ -21,4 +21,4 @@ async function WritingPage({ params }: { params: Promise<{ slug: string }> }) {
   );
 }
 
-export default WritingPage;
+export default ArticlesPage;
