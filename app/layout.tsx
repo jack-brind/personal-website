@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./global.css";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
-import { ThemeProvider } from "@/components/ThemeProvider";
+import LayoutClient from "../components/LayoutClient";
 
 const sans = localFont({
   src: [
@@ -59,17 +57,8 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${sans.variable} ${display.variable} ${mono.variable} ${serif.variable}`}
     >
-      <body className="font-sans flex flex-col gap-12 w-3xl m-auto min-h-screen">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Navigation />
-          <main className="p-6 flex-1">{children}</main>
-          <Footer />
-        </ThemeProvider>
+      <body className="font-sans flex flex-col gap-12 w-2xl m-auto min-h-screen mt-24 mb-16">
+        <LayoutClient>{children}</LayoutClient>
       </body>
     </html>
   );

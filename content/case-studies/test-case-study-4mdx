@@ -1,12 +1,11 @@
 ---
-title: "Flashcards"
+title: "Re-imagining the post-send experience"
+company: "PandaDoc"
 description: "This is a test to make sure everything works"
-prodUrl: "www.google.com"
-date: "2025-01-01"
-techStack: ["JavaScript", "Marked"]
+date: "2026-01-01"
 ---
 
-# Side project page
+# H1 — Page title
 
 Intro paragraph with **bold text**, _italic text_, and `inline code`.
 
@@ -26,3 +25,13 @@ An ordered list:
 
 > This is a blockquote.  
 > It supports **bold**, _italic_, and `inline code`.
+
+---
+
+### H3 — Code block
+
+```tsx
+export function Example({ count }: { count: number }) {
+  return <span>{count}</span>;
+}
+```

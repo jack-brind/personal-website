@@ -1,12 +1,30 @@
+import ProjectSection from "../components/ProjectSection";
+import { SmartLink } from "../components/SmartLink";
+
 export default function Page() {
   return (
-    <div className="flex flex-col gap-6">
-      <h1>Home page</h1>
-      <p>Headline, work, side projects and articles</p>
-      <div className="bg-elevated border border-zinc-200 rounded-xl p-7 shadow-xs">
-        This is test – It is an <em>elevated</em> container to demonstrate
-        prominence.
-      </div>
+    <div>
+      <p className="w-[48ch] text-secondary mb-12">
+        I design complex software systems and shape them into intuitive,
+        well-crafted experiences. I currently work at{" "}
+        <SmartLink href="https://www.pandadoc.com/" variant="external">
+          PandaDoc
+        </SmartLink>
+        , designing document workflows that feel effortless.
+      </p>
+      <ul className="flex items-center gap-6 mb-16">
+        <SmartLink href="/about" variant="nav">
+          About
+        </SmartLink>
+        <SmartLink href="/articles" variant="nav">
+          Articles
+        </SmartLink>
+        <SmartLink href="/contact" variant="nav">
+          Contact
+        </SmartLink>
+      </ul>
+      <ProjectSection type="case-studies" title="Work" />
+      <ProjectSection type="side-projects" title="Side projects" />
     </div>
   );
 }
