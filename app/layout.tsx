@@ -24,6 +24,16 @@ const display = localFont({
       weight: "500",
       style: "normal",
     },
+    {
+      path: "../public/fonts/InterDisplay-Semibold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/InterDisplay-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
   ],
   variable: "--font-display",
   display: "swap",
