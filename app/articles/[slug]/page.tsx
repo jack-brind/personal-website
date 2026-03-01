@@ -14,8 +14,8 @@ async function ArticlesPage({ params }: { params: Promise<{ slug: string }> }) {
   const { frontmatter, content } = result;
   return (
     <article>
-      <h1 className="text-display-xl">{frontmatter.title}</h1>
-      <p>{frontmatter.description}</p>
+      <h1 className="text-display-lg">{frontmatter.title}</h1>
+      <p className="mb-8">{frontmatter.description}</p>
       <MDXContent source={content} />
     </article>
   );

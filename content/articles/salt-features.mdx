@@ -1,0 +1,25 @@
+---
+title: "Salt features"
+description: "Short description of complexity article"
+date: "2025-05-10"
+readtime: 3
+category: ["Design thinking"]
+---
+
+At itris, I introduced a term internally that was "salt features", and it became a sort of mantra to help guide our approach to design.
+
+It was a way to describe features that, once shipped, would be difficult or impossible to unship without disruption to users. Like salt in cooking, if you add too much at once, it can ruin a dish. The best approach is to season little by little and keep tasting along the way until you get to your perfectly seasoned Michelin star feature. You can always add salt, but you can't take it away.
+
+While designing a feature to add Business Terms to company records at itris, we considered adding settings that could prevent users from creating jobs for companies without agreed terms. Initially, it seemed logical to include this as a configurable setting tied to Business Terms right away. However, we had long-term plans for a broader company compliance initiative that could be a more appropriate home for this functionality. Adding these settings to Business Terms prematurely would mean future friction both for users and for our team, as we would later need to unwind decisions already embedded into the product.
+
+We chose to hold off on including these settings initially. Although this meant a temporary trade-off in immediate functionality, we avoided unnecessary future work.
+
+Salt features helped us to think clearly about a project's scope, especially in ambiguous projects. It's tempting to include everything up-front, but decisions made early can present long-term challenges. Even seemingly minor choices, like adding a column to a table or a user preference, might deserve thoughtful consideration if there was a chance we would revisit or remove it later.
+
+Of course, it’s unrealistic to think of this as a bulletproof principle – this isn’t a perfect system because we can’t predict the future, and we still made mistakes. In reality, sometimes you have to ship with uncertainty and adjust later, but the principle helped us to be more intentional. It was a guideline that helped us to keep longer-term initiatives in mind.
+
+A good example of how impactful these commitments can be is when Apple made a change to Safari on iOS by [**moving the tab bar**](https://techcrunch.com/2021/08/18/apple-walks-back-controversial-safari-changes-with-ios-15-beta-6-update/) from the top to the bottom. The intention was to improve reachability but users were already accustomed to the tab bar being at the top, and the change disrupted their mental model. Even though objectively, this made much more sense, it wasn’t about whether the new position was better – it was that the existing pattern had become deeply ingrained, making the switch jarring. Could Apple have foreseen this in the first version of Safari on iOS? Probably not. But it clearly illustrates how early decisions can limit your future manoeuvrability.
+
+In fast moving product teams, throughput is often considered a measure of success and, overall it is. But if you focus exclusively on short-term momentum, you might miss signs of a potential accumulation of design and technical debt further down the road.
+
+Ultimately, taking some time to consider decisions, no matter how minor they initially seem, can proactively manage complexity and maintain product flexibility over time. Adding too much salt too quickly could leave you in a position where you might have no choice but to throw it away and start again.

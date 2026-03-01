@@ -1,3 +1,4 @@
+import ArticleList from "../components/ArticleList";
 import ProjectSection from "../components/ProjectSection";
 import { SmartLink } from "../components/SmartLink";
 
@@ -13,11 +14,11 @@ export default function Page() {
         , designing document workflows that feel effortless.
       </p>
       <ul className="flex items-center gap-6 mb-16">
+        <SmartLink href="/shots" variant="nav">
+          Shots
+        </SmartLink>
         <SmartLink href="/about" variant="nav">
           About
-        </SmartLink>
-        <SmartLink href="/articles" variant="nav">
-          Articles
         </SmartLink>
         <SmartLink href="/contact" variant="nav">
           Contact
@@ -25,6 +26,7 @@ export default function Page() {
       </ul>
       <ProjectSection type="case-studies" title="Work" />
       <ProjectSection type="side-projects" title="Side projects" />
+      <ArticleList />
     </div>
   );
 }
