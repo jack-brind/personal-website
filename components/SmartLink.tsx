@@ -3,7 +3,7 @@ import { ProjectCard } from "./ProjectCard";
 
 interface SmartLinkProps {
   href: string;
-  variant?: "nav" | "inline" | "external" | "rich" | "project";
+  variant?: "nav" | "inline" | "external" | "rich" | "project" | "article";
   children: React.ReactNode;
 }
 
@@ -34,6 +34,13 @@ export function SmartLink({ href, variant, children }: SmartLinkProps) {
 
   // Render a project card for case studies and side projects
   if (variant === "project") return <ProjectCard href={href}></ProjectCard>;
+
+  if (variant === "article")
+    return (
+      <Link href={href} className="text-primary font-medium">
+        {children}
+      </Link>
+    );
 
   // Render rich link for external links
   if (variant === "rich")

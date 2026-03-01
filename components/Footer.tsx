@@ -7,9 +7,6 @@ function Footer() {
       <Separator />
       <footer>
         <ul className="flex items-center gap-6">
-          <SmartLink href="/shots" variant="nav">
-            Shots
-          </SmartLink>
           <SmartLink href="/now" variant="nav">
             Now
           </SmartLink>

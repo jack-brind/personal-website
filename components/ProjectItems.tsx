@@ -30,9 +30,7 @@ function ProjectItems({
           </span>
         )}
       </div>
-      <div
-        className={`grid grid-cols-2 gap-8 ${title === "Work" ? " mb-16" : "mb-8"}`}
-      >
+      <div className="grid grid-cols-2 gap-8 mb-16">
         {visibleItems.map((item) => (
           <Link key={item.slug} href={`/work/${item.slug}`}>
             <div className="flex flex-col gap-3.5">
