@@ -20,7 +20,7 @@ function ProjectItems({
   return (
     <>
       <div className="flex justify-between mb-6">
-        <h2 className="text-display-sm">{title}</h2>
+        <h2 className="text-body-lg">{title}</h2>
         {items.length > 2 && (
           <span
             onClick={() => setShowAll(!showAll)}

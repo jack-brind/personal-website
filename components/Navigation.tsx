@@ -25,7 +25,7 @@ function Navigation({ isHome = false }: { isHome: boolean }) {
           </div>
         </Link>
         <div className="flex flex-col">
-          <h1 className="text-display-sm font-semibold">Jack Brind</h1>
+          <h1 className="text-body-lg font-semibold">Jack Brind</h1>
           <h2 className="text-body text-secondary font-medium">
             Product Designer
           </h2>
