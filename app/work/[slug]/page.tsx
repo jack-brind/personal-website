@@ -1,6 +1,6 @@
 import { getContentBySlug, getAllSlugs } from "@/lib/content";
 import { notFound } from "next/navigation";
-import { MDXRemote } from "next-mdx-remote/rsc";
+import MDXContent from "@/components/MDXContent";
 
 export async function generateStaticParams() {
   const slugs = await getAllSlugs("case-studies");
@@ -20,7 +20,7 @@ async function CaseStudyPage({
     <article>
       <h1 className="text-display-xl">{frontmatter.title}</h1>
       <p className="mb-12">{frontmatter.description}</p>
-      <MDXRemote source={content} />
+      <MDXContent source={content} />
     </article>
   );
 }
