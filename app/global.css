@@ -86,6 +86,41 @@
   text-wrap: pretty;
 }
 
+/* Prose */
+@utility prose {
+  /* Headings — override @layer base defaults */
+
+  & h1 {
+    @apply text-display-lg;
+  }
+  & h2 {
+    @apply text-display-md mb-3 mt-14;
+  }
+  & p {
+    @apply text-body mb-4;
+  }
+
+  & p:has(+ h3) {
+    @apply mb-3;
+  }
+
+  /* Vertical rhythm */
+
+  /* Lists */
+  & ul {
+    @apply list-disc ml-7 mb-6;
+  }
+
+  & ol {
+  }
+
+  & li {
+    @apply text-body;
+  }
+
+  /* Code */
+}
+
 .light {
   /* Semantic light colours */
   --bg-default: oklch(0.99 0 0);
