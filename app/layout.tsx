@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./global.css";
 import LayoutClient from "../components/LayoutClient";
 import { ImageLightboxProvider } from "../hooks/useLightbox";
+import { Toaster } from "@/components/ui/Sonner";
 
 const sans = localFont({
   src: [
@@ -72,6 +73,7 @@ export default function RootLayout({
         <LayoutClient>
           <ImageLightboxProvider>{children}</ImageLightboxProvider>
         </LayoutClient>
+        <Toaster />
       </body>
     </html>
   );
