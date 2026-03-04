@@ -86,6 +86,16 @@
   text-wrap: pretty;
 }
 
+/* 14px */
+@utility text-body-xs {
+  font-size: 0.75rem;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 475;
+  line-height: 1.5;
+  word-break: break-word;
+  text-wrap: pretty;
+}
+
 /* Prose */
 @utility prose {
   /* Headings — override @layer base defaults */

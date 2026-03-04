@@ -13,8 +13,7 @@ export function SmartLink({ href, variant, children }: SmartLinkProps) {
     return (
       <a
         href={href}
-        // className="text-accent hover:text-accent/75"
-        className="underline text-body-sm text-primary decoration-muted underline-offset-4"
+        className="underline text-body-sm text-primary hover:text-primary/75 decoration-muted underline-offset-4"
         target="_blank"
         rel="noopener noreferrer"
       >
