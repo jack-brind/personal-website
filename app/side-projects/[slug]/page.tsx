@@ -1,6 +1,7 @@
 import { getContentBySlug, getAllSlugs } from "@/lib/content";
 import { notFound } from "next/navigation";
 import MDXContent from "@/components/MDXContent";
+import { SetNavigationTitle } from "@/components/SetNavigationTitle";
 
 export async function generateStaticParams() {
   const slugs = await getAllSlugs("side-projects");
@@ -18,6 +19,7 @@ async function SideProjectPage({
   const { frontmatter, content } = result;
   return (
     <article>
+      <SetNavigationTitle title={frontmatter.title} />
       <h1 className="text-display-xl">{frontmatter.title}</h1>
       <p>{frontmatter.description}</p>
       <MDXContent source={content} />

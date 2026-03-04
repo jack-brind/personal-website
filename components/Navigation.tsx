@@ -8,7 +8,13 @@ import {
   BreadcrumbSeparator,
 } from "./ui/Breadcrumb";
 
-function Navigation({ isHome = false }: { isHome: boolean }) {
+function Navigation({
+  isHome = false,
+  title,
+}: {
+  isHome: boolean;
+  title?: string;
+}) {
   if (isHome)
     return (
       <header>
@@ -38,7 +44,10 @@ function Navigation({ isHome = false }: { isHome: boolean }) {
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <Link href="/" className="flex items-center gap-3">
+            <Link
+              href="/"
+              className="flex items-center gap-3 underline decoration-border underline-offset-4 text-secondary"
+            >
               <Image
                 src="/profile-image-light.png"
                 alt="Profile photo of Jack Brind"
@@ -49,9 +58,11 @@ function Navigation({ isHome = false }: { isHome: boolean }) {
               Home
             </Link>
           </BreadcrumbItem>
-          <BreadcrumbSeparator />
+          <BreadcrumbSeparator className="text-secondary">
+            /
+          </BreadcrumbSeparator>
           <BreadcrumbItem>
-            <BreadcrumbPage>Page</BreadcrumbPage>
+            <BreadcrumbPage>{title ?? "Page"}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
