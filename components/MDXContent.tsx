@@ -12,5 +12,9 @@ const mdxComponents = {
 };
 
 export default function MDXContent({ source }: { source: string }) {
-  return <MDXRemote source={source} components={mdxComponents} />;
+  return (
+    <div className="prose">
+      <MDXRemote source={source} components={mdxComponents} />
+    </div>
+  );
 }
