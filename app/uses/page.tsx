@@ -90,7 +90,7 @@ const productivityTools = [
     link: "https://dia.so",
   },
   {
-    logo: "/logos/cleanshotx.png",
+    logo: "/logos/cleanshot.png",
     name: "CleanShot X",
     description: "The best screenshot and screen recording tool on macOS.",
     link: "https://cleanshot.com",
