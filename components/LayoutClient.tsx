@@ -2,6 +2,7 @@
 // clash with Metadata in the layout.ts RSC
 "use client";
 
+import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -25,6 +26,13 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const { title: contextTitle } = useNavigationTitle();
+
+  // TO DO: This is a debug method – remove when site content is more mature.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  // Sets the breadcrumb title to the page title or contex title (e.g. article name)
   const title = contextTitle ?? staticTitles[pathname] ?? undefined;
 
   return (

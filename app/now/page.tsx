@@ -18,7 +18,7 @@ function NowPage() {
 
       <h2>Work</h2>
       <p>
-        I&apos;m focused on a core Workflows initiative at PandaDoc that
+        I'm focused on a core Workflows initiative at PandaDoc that
         connects two major parts of the product into a unified surface. This is
         a complex, cross-domain project teaching me to work at higher altitude
         and keep multiple teams aligned.
@@ -31,7 +31,7 @@ function NowPage() {
       </p>
       <p>Next up:</p>
       <ul>
-        <li>Animations (using Emil Kowalski&apos;s Animations on the Web)</li>
+        <li>Animations (using Emil Kowalski's Animations on the Web)</li>
         <li>Testing with Jest</li>
       </ul>
 

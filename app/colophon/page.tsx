@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { ColophonItem } from "@/components/ColophonItem";
 import { SmartLink } from "../../components/SmartLink";
 
