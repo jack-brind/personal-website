@@ -1,0 +1,61 @@
+---
+title: "Flashcards"
+description: "A Progressive Web App that I built to help me memorize and retain code syntax and mental models for implementing designs and help me learn code."
+prodUrl: "https://flashcards-orcin-nine.vercel.app/"
+sourceUrl: "https://github.com/jack-brind/flashcards/"
+date: "2025-01-01"
+techStack: ["JavaScript"]
+---
+
+# Learning code is hard
+
+At the end of 2024, I decided to start learning JavaScript.
+
+As a product designer, I want to be more effective at communicating with engineers and actually build a few side project ideas myself. I am already proficient with HTML and CSS, but I want my prototypes to come to life and to do that I would need to be able to write JavaScript and, eventually, React code.
+
+I consider myself to be quite a fast learner, but I was under no illusion that it would be easy. I knew the learning curve would be steep, but after learning the fundamentals early on like variables, conditionals, and operators, I felt confident. I had signed up for Jonas Schmedtmann's [JavaScript course](https://www.udemy.com/share/101Wfe3@r4EkOsfS64doh_MjK1dAV6IlUlc78O50WbdB9F3U3W10qmjsNWkYE23tpm9PsvceyA==/) on Udemy and, more recently, his [React course](https://www.udemy.com/share/108PTo3@3gcr6pB7VoZbRihi679sQ14MarCPOWDA5S2UBKDeDwihr44Y5HD3qqfoNpYpVfjtwg==/) too. But, as the course progressed, more abstract and advanced concepts started to creep in, and it was clear that there was a lot of information and syntax that I needed to retain.
+
+I came across a [blog post](https://www.joshwcomeau.com/blog/how-to-learn-stuff-quickly/) by Josh W Comeau on how to learn things fast. He uses a physical Leitner box with flashcards to regularly review and retain knowledge. That idea clicked with me and instead of using a physical box, I decided to build my own flashcards app.
+
+Building the app was a way to steer me away from tutorial hell, and it was a great way to learn by doing and build something genuinely useful that I would use to help me learn.
+
+![Flashcards app](https://uploads.linear.app/1da7b941-bcf7-47f5-a144-eee708eb38cc/70fb82a6-99aa-4cb4-8245-ae39b51db327/56c786a6-df96-4a39-ae91-011a2cf09723)
+
+# Scoping out the initial version
+
+I designed the app to be mobile-first, since flashcards made the most sense as something I could quickly access wherever I was. I also wanted it to feel native, so I included a `manifest.json` file to enable PWA functionality and install the app on my phone’s home screen.
+
+The app wouldn't just be for JavaScript and React either. Although I am comfortable with HTML and CSS, there are still many techniques that I am unfamiliar with that I'd like to learn like view transitions, container queries and anchor positioning. I would also like to learn things like Typescript and Next.js in the future, so the system needed to scale to support more topics over time.
+
+# Flashcards
+
+The app itself is fairly straight-forward. Tips are grouped into categories and written in Markdown (for portability and a nice authoring experience) and these tips are served randomly from the selected category.
+
+![Flashcards app](https://uploads.linear.app/1da7b941-bcf7-47f5-a144-eee708eb38cc/722609b6-c770-44e9-abc5-fa7d6bc5a3d7/65490171-1de3-4288-a930-ad2ce34e4f96)
+
+I used [marked](https://github.com/markedjs/marked) to parse the Markdown into HTML, and this has worked well so far. One issue that I haven't yet solved is presenting formatted code snippets. I wrestled with [highlight.js](https://github.com/highlightjs/highlight.js) and [prism.js](https://github.com/PrismJS/prism) for what felt like days, and I just couldn't get it working. So instead, I used a [Raycast tool](https://www.ray.so/#padding=64) that I stumbled across on Twitter which is really nice, so the code snippets are currently all images. It's not ideal, but it works for now.
+
+# 📱 Live demo
+
+You can check out Flashcards below if you like, or you can view it [here](https://flashcards-orcin-nine.vercel.app/).
+
+_Note: To reveal the categories, click anywhere on the body._
+
+IMAGE
+
+# The present and the future of Flashcards
+
+So far, I have found it really helpful, and I'm more confident remembering syntax, especially. I tend to use it whenever I get a spare few minutes – often early in the morning, or at night, which is why I opted for dark mode first.
+
+I wanted these tips to be as digestible as possible, as it would be easier to absorb than lengthy explanations with loads of examples. That said, there are still a few tips that are a bit long. Writing the tips myself has also helped to reinforce concepts because I use examples that are relevant to me like my family, pets, cars, hobbies, etc.
+
+Is the code the best? No. It's messy, it's pretty amateur and I have no doubt I'll look back in time, with broader knowledge and perhaps have a different approach. But it is perfect for me at this point in my learning journey.
+
+So far, I have nearly 80 JavaScript tips. I have since moved onto React, and so this section of tips will grow in due course.
+
+Eventually, I'd like to do things like:
+
+- Re-write it in React when learning React
+- Improve parts of the UI and interaction – selecting the category is very hidden, but it is only for me (at the moment, anyway)
+- Maybe one day include a light mode using `prefers-color-scheme`
+- Maybe preferences for which category to load by default (right now it's JavaScript, but when I learn React, instead of hard-coding the default, a choice might be good)

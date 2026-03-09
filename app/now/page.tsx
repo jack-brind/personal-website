@@ -11,17 +11,17 @@ function NowPage() {
         src="/test-now-image.png"
         alt="alt tag for now image"
         caption="This is a test image to debug issues with the Figure.tsx component"
-        width={1440}
-        height={600}
+        width={672}
+        height={378}
         id="now"
       />
 
       <h2>Work</h2>
       <p>
-        I'm focused on a core Workflows initiative at PandaDoc that
-        connects two major parts of the product into a unified surface. This is
-        a complex, cross-domain project teaching me to work at higher altitude
-        and keep multiple teams aligned.
+        I'm focused on a core Workflows initiative at PandaDoc that connects two
+        major parts of the product into a unified surface. This is a complex,
+        cross-domain project teaching me to work at higher altitude and keep
+        multiple teams aligned.
       </p>
 
       <h2>Learning</h2>
@@ -54,6 +54,7 @@ function NowPage() {
           – The third book in the 6:20 man series.
         </li>
         <li>
+          Previous:{" "}
           <SmartLink href="https://rosenfeldmedia.com/books/the-staff-designer/?srsltid=AfmBOoq1BN6Iy57dz7WvfUWzh-wA0NiP25WRs9-Mgoeg2Fd7Mc82Df72">
             The Staff Designer by Catt Small
           </SmartLink>
@@ -62,9 +63,15 @@ function NowPage() {
       <Separator className="mt-16 mb-10" />
       <p className="italic text-secondary">Last updated Feb 2026.</p>
       <p className="italic text-secondary">
-        This <SmartLink href="https://nownownow.com/">/now page</SmartLink>{" "}
+        This{" "}
+        <SmartLink href="https://nownownow.com/" className="text-secondary">
+          /now page
+        </SmartLink>{" "}
         describes what I’ve been up to recently, and is inspired by{" "}
-        <SmartLink href="https://sive.rs/">Derek Sivers</SmartLink>.
+        <SmartLink href="https://sive.rs/" className="text-secondary">
+          Derek Sivers
+        </SmartLink>
+        .
       </p>
     </article>
   );

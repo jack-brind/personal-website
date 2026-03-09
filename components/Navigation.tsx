@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 import {
   Breadcrumb,
@@ -7,6 +6,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "./ui/Breadcrumb";
+import { SmartLink } from "@/components/SmartLink";
 
 function Navigation({
   isHome = false,
@@ -18,18 +18,26 @@ function Navigation({
   if (isHome)
     return (
       <header>
-        <Link href="/" className="flex flex-col gap-3">
-          <div className="mb-8 w-10 h-10 rounded-full border border-black/12 overflow-hidden">
+        <SmartLink href="/" variant="nav" className="flex flex-col gap-3">
+          <div className="relative mb-8 w-10 h-10 rounded-full overflow-hidden before:content-[''] before:absolute before:inset-0 before:rounded-full before:border before:border-black/12 before:z-10">
             <Image
-              src="/profile-image-light.png"
+              src="/profile-photo-light.png"
               alt="Profile photo of Jack Brind"
-              width={40}
-              height={40}
+              width={240}
+              height={240}
               priority
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover dark:hidden"
+            />
+            <Image
+              src="/profile-photo-dark.png"
+              alt="Profile photo of Jack Brind"
+              width={240}
+              height={240}
+              priority
+              className="w-full h-full object-cover hidden dark:block"
             />
           </div>
-        </Link>
+        </SmartLink>
         <div className="flex flex-col">
           <h1 className="text-body-lg font-semibold">Jack Brind</h1>
           <h2 className="text-body text-secondary font-medium">
@@ -44,25 +52,39 @@ function Navigation({
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <Link
+            <SmartLink
               href="/"
-              className="flex items-center gap-3 underline decoration-border underline-offset-4 text-secondary"
+              variant="nav"
+              className="flex items-center gap-3 underline decoration-border underline-offset-4 text-sm text-secondary"
             >
-              <Image
-                src="/profile-image-light.png"
-                alt="Profile photo of Jack Brind"
-                width={24}
-                height={24}
-                priority
-              />
+              <div className="relative h-6 w-6 rounded-full overflow-hidden before:content-[''] before:absolute before:inset-0 before:rounded-full before:border before:border-black/12 before:z-10">
+                <Image
+                  src="/profile-photo-light.png"
+                  alt="Profile photo of Jack Brind"
+                  width={120}
+                  height={120}
+                  priority
+                  className="dark:hidden"
+                />
+                <Image
+                  src="/profile-photo-dark.png"
+                  alt="Profile photo of Jack Brind"
+                  width={120}
+                  height={120}
+                  priority
+                  className="hidden dark:block"
+                />
+              </div>
               Home
-            </Link>
+            </SmartLink>
           </BreadcrumbItem>
-          <BreadcrumbSeparator className="text-secondary">
+          <BreadcrumbSeparator className="text-secondary text-body-sm">
             /
           </BreadcrumbSeparator>
           <BreadcrumbItem>
-            <BreadcrumbPage>{title ?? "Page"}</BreadcrumbPage>
+            <BreadcrumbPage className="text-body-sm">
+              {title ?? "Page"}
+            </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

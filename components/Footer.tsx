@@ -6,7 +6,7 @@ function Footer() {
     <div className="flex flex-col gap-12">
       <Separator />
       <footer>
-        <ul className="flex items-center gap-6">
+        <ul className="flex items-center gap-6 text-secondary">
           <SmartLink href="/now" variant="nav">
             Now
           </SmartLink>

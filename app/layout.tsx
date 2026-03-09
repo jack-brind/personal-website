@@ -42,8 +42,9 @@ const display = localFont({
 });
 
 const mono = localFont({
-  src: "../public/fonts/JetBrainsMono.woff2",
+  src: "../public/fonts/JetBrainsMono-Variable.ttf",
   variable: "--font-mono",
+  weight: "100 900",
   display: "swap",
 });
 
