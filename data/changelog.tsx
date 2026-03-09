@@ -8,6 +8,7 @@ export type ChangelogType =
   | "Feature"
   | "Fix"
   | "Side project"
+  | "Case study"
   | "Launch";
 
 export type ChangelogImage = {

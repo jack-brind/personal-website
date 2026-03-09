@@ -49,9 +49,9 @@ function ColophonPage() {
           variant="Tech"
         />
         <ColophonItem
-          logo="lucide"
-          name="Lucide Icons"
-          description="Consistent stroke icons via lucide-react."
+          logo="react-icons"
+          name="React Icons"
+          description="Lucide by default and Tabler for filled icons."
           variant="Tech"
         />
       </div>

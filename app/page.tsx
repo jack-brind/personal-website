@@ -8,18 +8,22 @@ export default function Page() {
       <p className="w-[48ch] text-secondary mb-12">
         I design complex software systems and shape them into intuitive,
         well-crafted experiences. I currently work at{" "}
-        <SmartLink href="https://www.pandadoc.com/" variant="external">
+        <SmartLink
+          href="https://www.pandadoc.com/"
+          variant="external"
+          className="text-secondary"
+        >
           PandaDoc
         </SmartLink>
         , designing document workflows that feel effortless.
       </p>
       <ul className="flex items-center gap-6 mb-16">
-        <SmartLink href="/shots" variant="nav">
-          Shots
-        </SmartLink>
         <SmartLink href="/about" variant="nav">
           About
         </SmartLink>
+        {/* <SmartLink href="/shots" variant="nav">
+          Shots
+        </SmartLink> */}
         <SmartLink href="/contact" variant="nav">
           Contact
         </SmartLink>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Copy, CopyCheck } from "lucide-react";
+import { LuCheck, LuCopy, LuCopyCheck } from "react-icons/lu";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "./ui/Button";
@@ -22,8 +22,8 @@ export function ContactLink({
     setTimeout(() => setCopied(false), 3000);
     toast(
       <div className="flex items-start gap-3">
-        <CopyCheck size={16} className="shrink-0 text-secondary " />
-        <p className="font-medium text-body-xs">{`${label} ${href.startsWith("mailto:") ? "" : "link"} copied!`}</p>
+        <LuCopyCheck size={16} className="shrink-0 text-secondary " />
+        <p className="font-medium text-body-sm">{`${label} ${href.startsWith("mailto:") ? "" : "link"} copied!`}</p>
       </div>,
       { position: "bottom-right" },
     );
@@ -40,7 +40,7 @@ export function ContactLink({
     <div className="group flex items-center gap-1.5 w-30">
       <a
         href={href}
-        className="underline text-body-sm text-primary hover:text-primary/75 decoration-muted underline-offset-4"
+        className="underline text-body text-secondary decoration-border-dark hover:decoration-muted underline-offset-4"
         target="_blank"
         rel="noopener noreferrer"
         onClick={handleLinkClick}
@@ -50,14 +50,14 @@ export function ContactLink({
       <Button
         variant="ghost"
         size="xs"
-        className="relative opacity-0 group-hover:opacity-100 transition-opacity"
+        className="relative opacity-0 group-hover:opacity-100"
         onClick={handleCopy}
       >
-        <Copy
-          className={`transition-all duration-200 ${copied ? "opacity-0 blur-[2px] scale-75" : "opacity-100 blur-0 scale-100"}`}
+        <LuCopy
+          className={`transition-all duration-200 ${copied ? "opacity-0 blur-[1px]" : "opacity-100 blur-0"}`}
         />
-        <Check
-          className={`absolute transition-all duration-200 ${copied ? "opacity-100 blur-0 scale-100" : "opacity-0 blur-[2px] scale-75"}`}
+        <LuCheck
+          className={`absolute transition-all duration-200 ${copied ? "opacity-100 blur-0" : "opacity-0 blur-[1px]"}`}
         />
       </Button>
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import { LuArrowUpRight } from "react-icons/lu";
 import {
   HoverCard,
   HoverCardContent,
@@ -29,7 +29,7 @@ export function UsesItem({
           aria-label={`Open ${name}`}
           className="relative flex flex-col items-center justify-around rounded-lg h-31 p-1 hover:bg-sunken cursor-pointer group"
         >
-          <ArrowUpRight
+          <LuArrowUpRight
             size={14}
             className="absolute top-3 right-3 text-secondary opacity-0 group-hover:opacity-100 transition-opacity"
           />
