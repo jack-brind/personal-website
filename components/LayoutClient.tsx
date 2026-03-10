@@ -42,7 +42,7 @@ function LayoutInner({ children }: { children: React.ReactNode }) {
       enableSystem
       disableTransitionOnChange
     >
-      <Navigation isHome={isHome} title={title} />
+      {(isHome || title !== undefined) && <Navigation isHome={isHome} title={title} />}
       <main>{children}</main>
       {isHome && <Footer />}
     </ThemeProvider>
