@@ -21,9 +21,6 @@ export default function Page() {
         <SmartLink href="/about" variant="nav">
           About
         </SmartLink>
-        {/* <SmartLink href="/shots" variant="nav">
-          Shots
-        </SmartLink> */}
         <SmartLink href="/contact" variant="nav">
           Contact
         </SmartLink>

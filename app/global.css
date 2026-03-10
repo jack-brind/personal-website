@@ -224,7 +224,7 @@
   --fg-primary: oklch(0.33 0.013 273);
   --fg-secondary: oklch(0.54 0.012 262);
   --fg-muted: oklch(0.67 0.013 260);
-  --fg-accent: oklch(0.47 0.18 263);
+  --fg-accent: oklch(0.3235 0.0222 260.73);
   --border: oklch(0.33 0.013 273 / 12%);
   --border-dark: oklch(0.33 0.013 273 / 24%);
   --selection: oklch(0.33 0.013 273 /16%);
