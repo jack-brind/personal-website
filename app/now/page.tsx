@@ -13,7 +13,6 @@ function NowPage() {
         caption="This is a test image to debug issues with the Figure.tsx component"
         width={672}
         height={378}
-        id="now"
       />
 
       <h2>Work</h2>

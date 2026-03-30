@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./global.css";
 import LayoutClient from "../components/LayoutClient";
-import { ImageLightboxProvider } from "../hooks/useLightbox";
 import { Toaster } from "@/components/ui/Sonner";
 
 const sans = localFont({
@@ -72,7 +71,7 @@ export default function RootLayout({
     >
       <body className="font-sans flex flex-col gap-12 w-2xl m-auto min-h-screen mt-24 mb-16">
         <LayoutClient>
-          <ImageLightboxProvider>{children}</ImageLightboxProvider>
+          {children}
         </LayoutClient>
         <Toaster />
       </body>

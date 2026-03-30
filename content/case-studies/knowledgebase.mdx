@@ -1,0 +1,86 @@
+---
+title: "Knowledgebase"
+company: "itris"
+date: "2023-01-01"
+image: "case-study-images/knowledgebase-article"
+imageStyle:
+  position: "absolute"
+  height: "117%"
+  width: "100%"
+  inset: "0px"
+  objectFit: "cover"
+  objectPosition: "left top"
+  border: "1px solid #00000008"
+  margin: "16px"
+  borderRadius: "6px"
+  overflow: "hidden"
+description: "We replaced a scattered collection of PDFs with a purpose-built learning hub — cutting support and training demand so significantly that the team shrank from 5 people to 1, while customer satisfaction held strong."
+---
+
+<Figure
+  src="/case-study-images/knowledgebase-article.png"
+  alt="Dashboard"
+  caption="Compliance override audit trail"
+  width={1440}
+  height={900}
+/>
+
+itris is a recruitment CRM with workflows complex enough to warrant solid documentation. That documentation existed — but only as PDFs buried on a shared drive. If you knew where to look, you could find them. Most users didn't.
+
+The knock-on effect was predictable: teams started duplicating and customising the PDFs for their own use, which meant documentation fragmented quickly and fell out of date. There was no single source of truth, and users had no reliable place to self-educate. The training team was picking up the slack with formal courses, but in an industry with high staff turnover, that model didn't scale — and it wasn't sustainable for the business.
+
+This wasn't just a UX problem. It was creating support overhead, undermining user confidence, and falling short of the quality standard the business had set for itself.
+
+# Off-the-shelf wasn't going to cut it
+
+Before jumping to a solution, I looked at existing documentation platforms — GitBook, Notion, and exposing our internal Confluence instance publicly. None of them worked. They either lacked the customisation we needed to align with the brand, or came with too many technical and structural trade-offs.
+
+That ruled out the easy path and opened the door to a purpose-built solution: a dedicated Knowledgebase site we could design and control end to end.
+
+# Three constraints shaped every decision
+
+**1. Content existed, but not in the right format.**
+All existing materials were in PDFs or internal Confluence docs. Porting them to the site meant converting everything to markdown — a non-trivial lift.
+
+**2. The visual language was mid-evolution.**
+A new design system iteration was in progress but not mature. Implementing it for the Knowledgebase meant creating new components specifically for the site, adding scope to a project that already had a lot of moving parts.
+
+**3. The training team would become the content owners.**
+Long-term, the training team would need to write and publish articles themselves. That meant they'd need to learn VS Code, markdown, and git — a meaningful ask for a team with no prior exposure to those tools.
+
+Each of these could have been a reason to scale back ambition. Instead, they became design constraints that shaped the solution.
+
+# What I decided, and why
+
+After exploring a range of directions and pressure-testing them with stakeholders, the final design prioritised two things above everything else: **findability** and **flexibility of learning style**.
+
+For inspiration, I looked at best-in-class documentation — Stripe Guides for its structure and hierarchy, Apple Support for its clarity, and Atlassian's docs for how they handled complex, multi-path content. The goal wasn't to copy any of them, but to understand what made each feel trustworthy and easy to navigate.
+
+The site launched with:
+
+- A **landing page** designed to orient users and reduce time-to-first-article
+- **Two navigation routes** into content: a guided series route (mirroring training courses for new users) and a category route (for experienced users who know what they're looking for)
+- **Search** — the fastest path for users who have a specific question
+- **Release notes, Top Tips, and FAQs** — content types that addressed different moments in the user journey, not just onboarding
+
+The series/category split was a deliberate structural choice. Different users come to documentation with fundamentally different mental models — some want to be led through content linearly, others want to jump directly to what they need. Building both routes into the IA from the start meant neither group had to compromise.
+
+# The result changed how the business runs
+
+Since launching in 2022, the Knowledgebase has grown to 200+ articles, 50+ Top Tips, and 60+ FAQs. It averages around 1,600 visits per month.
+
+The business impact was significant:
+
+> As a result of the Knowledgebase, the demands on our services changed and the volume of inbound calls and emails reduced considerably. We were also able to reduce the training department's headcount from 5 members of staff down to 1, whilst still maintaining strong customer feedback.
+
+Ian Farrow, Product Director
+
+That's not a marginal efficiency gain. Reducing a team from 5 to 1 while holding customer satisfaction is a structural shift in how the business delivers support — and it was made possible by users being able to help themselves.
+
+# What I'd do differently
+
+The training team's onboarding to VS Code, markdown, and git was underestimated in the original scope. In hindsight, I'd have built a simpler content authoring interface earlier — or at minimum, created better tooling and templates to reduce the friction of contribution. The Knowledgebase is only as good as the content pipeline that feeds it, and that pipeline deserved more design attention than it got.
+
+I'd also instrument the site more thoroughly from day one. Traffic data tells us the Knowledgebase is used, but search query data and article completion rates would tell us _how_ — and where users are still getting stuck.
+
+<CaseStudyFooter />

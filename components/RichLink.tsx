@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { RichLinkActions } from "./RichLinkActions";
 
 async function fetchOG(url: string) {
@@ -51,11 +52,12 @@ export async function RichLink({
       >
         {og.image && (
           <div className="relative w-32 h-full shrink-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={og.image}
               alt={og.title ?? hostname}
-              className="w-full h-full object-cover"
+              fill
+              unoptimized
+              className="object-cover"
             />
           </div>
         )}

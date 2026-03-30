@@ -5,4 +5,50 @@ description: "If staffing agencies don't have an accurate and efficient way to u
 date: "2024-01-01"
 ---
 
-Content goes here...
+# When a manual process becomes a legal liability
+
+Every April, the UK National Living Wage increases. For a staffing agency managing 500 active placements, that means 500 manual rate updates — each taking around 20 seconds. Four hours of repetitive admin, performed under regulatory pressure, with zero margin for error. Miss a worker, pay them below the legal threshold, and fines start at £20,000 per person. In Germany, €500k. In the US, $2,451 per employee plus mandatory backpay.
+
+This wasn't a convenience problem. It was a compliance risk hiding inside a tedious workflow.
+
+# The problem had two layers
+
+The time cost was visible. The identification problem was worse. itris had no rate-based filtering in search, so before admin teams could update rates, they had to manually scan through placement lists to find which ones needed changing. For disorganised teams — or just busy ones — placements got missed. And missed placements meant workers paid the wrong amount.
+
+From the volume of customer feedback we'd received, we estimated ~$450k ARR was at risk from churn. Our sales team flagged it as a recurring barrier to closing deals with temp staffing agencies. Competitors were starting to offer solutions, and we weren't.
+
+I decided we didn't need formal research — and that was the right call
+
+The feedback was unanimous. The regulation was well-understood. Running discovery interviews would have taken weeks to confirm what we already knew. Instead, I focused effort on the three areas where genuine unknowns existed: the regulatory penalty landscape across our key markets, a deep technical architecture review with engineering, and a competitor analysis to understand where existing solutions fell short.
+
+The risk wasn't "are we solving the right problem?" — it was "can we solve it cleanly within our technical constraints?"
+
+# The obvious solution would have destroyed the audit trail
+
+The instinct was to link placement rates directly to global templates and let updates cascade automatically. Clean in concept. Catastrophic in practice.
+
+itris's rate architecture is built around financial immutability — existing rate records can never be modified, because every historical timesheet entry needs to trace back to the exact rate that applied at that moment. Auto-cascading updates would have rewritten that history, breaking the compliance and payroll reporting that customers depended on.
+
+The breakthrough came through close collaboration with the backend engineer. Instead of linking rates by ID, we tagged each placement rate with the ID of the global rate it originated from — a family tree relationship rather than a live link. The placement kept its own independent record. The global relationship stayed traceable. When a bulk update ran, the system found all placements tagged with the old rate's ID and created new forward-looking records for each. Historical data: untouched.
+
+# Three decisions that shaped the experience
+
+**Preview before commit.** There was no bulk undo. Applying the wrong rate to 500 placements would be a serious problem. I pushed for a confirmation step showing exactly which placements would be affected — giving users the confidence to act, and a way to catch mistakes before they hit payroll.
+
+**Make it safely repeatable.** Rate switches could be scheduled ahead of effective dates, but new placements created in the gap wouldn't automatically inherit the update. Rather than building complex logic to handle this automatically, I made the operation idempotent — safe to run multiple times, only targeting placements that still carried the old rate. Admins could simply re-run it to catch stragglers.
+
+**Currency-filtered rate selection.** When choosing which global rate to switch to, the system only showed rates in the same currency as the one being replaced. A small decision that prevented a whole category of configuration errors and reduced noise at a high-stakes moment.
+
+# What happened
+
+In the 18 months after launch, customers created over 4,500 global rates across the platform — representing around 25 hours of admin time saved collectively. The feature addressed the $450k ARR churn risk, removed a persistent sales barrier for temp agency deals, and neutralised the competitive gap.
+
+One customer summed it up:
+
+> What used to take our team three days every quarter now takes three minutes.
+
+# What I'd do differently
+
+The language caused friction. Users expected to "update" a rate. We shipped "switch to a new rate" — which required creating the new rate first, as a separate step. A cleaner workflow would let users edit values inline within the switching flow, framing it as an update rather than a swap. The distinction made sense technically. It didn't make sense to users.
+
+<CaseStudyFooter />

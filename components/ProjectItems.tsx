@@ -31,51 +31,64 @@ function ProjectItems({
         )}
       </div>
       <div className="grid grid-cols-2 gap-8 mb-16">
-        {visibleItems.map((item) => (
-          <Link
-            key={item.slug}
-            href={`/${"company" in item ? "work" : "side-projects"}/${item.slug}`}
-          >
-            <div className="flex flex-col gap-3.5">
-              <div className="relative w-full h-48 border rounded-2xl bg-sunken">
-                {item.image && (
-                  <Image
-                    src={`/${item.image}.png`}
-                    alt="image"
-                    fill
-                    className="object-cover"
-                  />
-                )}
+        {visibleItems.map((item) => {
+          const { objectFit, objectPosition, ...imageWrapperStyle } =
+            item.imageStyle ?? {};
+          return (
+            <Link
+              key={item.slug}
+              href={`/${"company" in item ? "work" : "side-projects"}/${item.slug}`}
+              className="group"
+            >
+              <div className="flex flex-col gap-3.5">
+                <div
+                  className="relative w-full h-48 border rounded-2xl bg-sunken overflow-hidden"
+                  style={item.imageContainerStyle}
+                >
+                  {item.image && (
+                    <div
+                      className="absolute inset-0 transition-transform duration-200 group-hover:scale-105"
+                      style={imageWrapperStyle}
+                    >
+                      <Image
+                        src={`/${item.image}.png`}
+                        alt="image"
+                        fill
+                        style={{ objectFit, objectPosition }}
+                      />
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <h3 className="text-body-sm font-semibold text-pretty w-4/5">
+                    {item.title}
+                  </h3>
+                  {"company" in item && (
+                    <span className="text-body-sm font-medium text-secondary flex items-center gap-2">
+                      {item.company}{" "}
+                      <div className="h-0.75 w-0.75 bg-secondary rounded-full"></div>{" "}
+                      {item.date && new Date(item.date).getFullYear()}
+                    </span>
+                  )}
+                  {"techStack" in item && item.techStack && (
+                    <span className="flex items-center gap-2">
+                      {item.techStack.map((stack, i) => (
+                        <Fragment key={stack}>
+                          {i > 0 && (
+                            <div className="h-0.75 w-0.75 bg-secondary rounded-full"></div>
+                          )}
+                          <span className="text-body-sm font-medium text-secondary">
+                            {stack}
+                          </span>
+                        </Fragment>
+                      ))}
+                    </span>
+                  )}
+                </div>
               </div>
-              <div className="flex flex-col gap-1.5">
-                <h3 className="text-body-sm font-semibold text-pretty w-4/5">
-                  {item.title}
-                </h3>
-                {"company" in item && (
-                  <span className="text-body-sm font-medium text-secondary flex items-center gap-2">
-                    {item.company}{" "}
-                    <div className="h-0.75 w-0.75 bg-secondary rounded-full"></div>{" "}
-                    {item.date && new Date(item.date).getFullYear()}
-                  </span>
-                )}
-                {"techStack" in item && item.techStack && (
-                  <span className="flex items-center gap-2">
-                    {item.techStack.map((stack, i) => (
-                      <Fragment key={stack}>
-                        {i > 0 && (
-                          <div className="h-0.75 w-0.75 bg-secondary rounded-full"></div>
-                        )}
-                        <span className="text-body-sm font-medium text-secondary">
-                          {stack}
-                        </span>
-                      </Fragment>
-                    ))}
-                  </span>
-                )}
-              </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          );
+        })}
       </div>
     </>
   );
