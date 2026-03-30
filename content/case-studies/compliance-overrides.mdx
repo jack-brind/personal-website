@@ -2,55 +2,58 @@
 title: "Implementing auditable compliance overrides in itris"
 company: "itris"
 date: "2024-01-01"
-description: "I designed a solution for staffing agencies to ensure that compliance worked for them. Within a month of this improvement being released, one customer on an older version upgraded with a contractual value of over $200k."
+image: "case-study-images/override-dialogs"
+imageStyle:
+  objectFit: "contain"
+  padding: "2rem"
+  transform: "skewX(-10deg) rotate(5deg)"
+description: "How a 2FA-inspired override unlocked £150k in blocked revenue — without compromising compliance"
 ---
 
-<img
+<Figure
   src="/case-study-images/override-dialogs.png"
   alt="Dashboard"
+  width={4144}
+  height={2096}
+  border={false}
   className="skew-reverse p-6"
 />
 
-# Context
+# The problem that was costing us customers
 
-Temporary and contract staffing businesses have a duty of care to their clients to ensure that the workers that they place are fully compliant. This includes such things as background checks, certificates and qualifications, and rights to work, and the requirements can vary between sectors dramatically. In itris, there are two modes for compliance – _Informational_ or _Preventative_, and there became a need to introduce the ability for users to override preventative compliance requirements.
+Compliance in staffing software is binary by design — either a candidate is cleared to work, or they aren't. At itris, that meant recruiters couldn't create a placement record until every check was satisfied. For most sectors, this works. For education, it didn't.
 
-I collaborated with the product and development teams to reach an elegant solution.
+Teachers are often placed months before a school year starts. Compliance checks — DBS certificates, right to work documents, qualifications — take time to process, but clients need contracts confirmed early. Recruiters were stuck: they couldn't place, couldn't invoice, and couldn't satisfy clients. So they found workarounds. Messy, audit-unfriendly ones.
 
-# Problem
+One customer told us directly they wouldn't upgrade to the latest version without a solution to this. Their contract was worth over £150k.
 
-There is no middle ground for compliance in itris, and that was intentional – it either stops a user from placing or extending a non-compliant candidate, or it is allowed, and the compliance status is highlighted to the user. However, some customers wanted to confirm placements far in advance, where compliance requirements wouldn't be satisfied initially, but would be in place before the start date.
+# What we actually needed to solve
 
-This was particularly the case with the education sector, where teachers were placed at schools for the following school year far in advance of the start date. Customers still wanted compliance to be preventative, but needed to be able to create placement records to be able to invoice their clients and in its current state, this was causing customers to use inefficient workarounds.
+The temptation was to soften compliance — introduce a grey area between "blocked" and "allowed." We pushed back on that. The whole point of preventative compliance is that it's strict. Blurring the line would erode trust in the system and create liability for our customers.
 
-# Goals
+The real problem wasn't that compliance was too strict. It was that there was no safe mechanism for an authorised person to say _"I know this isn't compliant yet — I'm accountable for that decision."_
 
-## User
+# The insight that changed everything
 
-- Allow compliance requirements to be bypassed in certain scenarios
-- Provide an audit trail of overridden compliance requirements
-- Ensure compliance teams still maintained their SLAs
+One request kept coming up in customer feedback: a manager should be able to type in a password to unblock a placement. It made sense intuitively, but it was exploitable — if anyone saw the password, they could use it indefinitely with no trace.
 
-## Business
+That's when I started thinking about how modern apps handle sensitive one-time authorisation: two-factor authentication. What if, instead of a static password, a privileged user could generate a time-limited, single-use code? The compliance block would still exist. The candidate would still show as non-compliant. But an authorised person could issue a code, and the override would be logged — who issued it, when, and for which placement.
 
-- Protect revenue
-- Reduce the risk of increased customer churn
+It threads the needle: compliance teams keep their oversight, recruiters get unblocked, and there's a clear audit trail if anything is ever questioned.
 
-# Research
+# Three decisions that shaped the solution
 
-After collating feedback from customers, I noticed 3 categories of requests:
+1. Non-compliance stays visible: Overriding the block doesn't mark the candidate as compliant. They're still flagged in compliance reports. The override is a documented exception, not a status change. This was important for our customers' regulatory obligations.
+2. Code generation is privileged: Only designated users can generate override codes. This keeps the accountability chain clear — a recruiter can't unblock themselves; they need sign-off from someone with authority.
+3. Audit trail is first-class: Every override is logged with the issuer, timestamp, and context. This wasn't an afterthought — it was central to the pitch internally. Without it, the feature would have created liability; with it, it reduced it.
 
-1. **A manager typing a password in at their computer** – This is prone to exploitation and doesn't scale effectively for hybrid or remote teams.
-2. **A hybrid between preventative and information compliance** – Given the sensitive, business critical nature of compliance, we intentionally wanted the options to be strictly on or off, and we didn't want to blur the lines.
-3. **Draft placements** – We had considered this as part of a wider initiative, but this would have significantly increased the scope of the project, which we didn't have the appetite for at the time.
+# What happened
 
-These categories addressed specific customers' needs, but we needed to keep the broader customer-base in mind. However, the idea of a password entered to override compliance was a thread I wanted to pull on a little more.
+Within a month of release, the customer who had refused to upgrade came on board. £150k contract, directly attributable to this feature. We were also confident it would improve retention more broadly — this wasn't an edge case request; it was a pattern across multiple customers in education and similar sectors.
 
-# Solution
+# What I'd do differently
 
-The trouble with a password is that if a user sees that password as someone is typing it in, they can use it again and again with no ramifications. But it got me thinking about a common pattern seen in modern software, which is 2-Factor Authentication. What if we could use something along the lines of a one time passcode to safely allow compliance requirements to be overridden?
-
-After meetings with the product team and developers, we decided on a direction and implemented a method for privileged users to generate unique, time-based codes to override compliance restrictions. This also included an audit trail of when compliance was overridden and who the code was issued by.
+I'd have pushed to define the audit trail UI earlier in the process. We got it right, but it was a late conversation — and for a feature where accountability is the whole point, the way that log is surfaced to compliance managers deserved more design attention than we gave it at the time.
 
 <Figure
   src="/case-study-images/compliance-audit.png"
@@ -58,8 +61,6 @@ After meetings with the product team and developers, we decided on a direction a
   caption="Compliance override audit trail"
   width={1440}
   height={900}
-  id="dashboard"
-  navigation={true}
 />
 
 <Figure
@@ -68,14 +69,6 @@ After meetings with the product team and developers, we decided on a direction a
   caption="Improvements to some components to support the new feature"
   width={1440}
   height={900}
-  id="dashboard"
-  navigation={true}
 />
-
-Crucially, overriding compliance did not mean that the candidate was marked as compliant; they were still non-compliant and would still be highlighted in compliance reports. However, users were unblocked and the placement could be created.
-
-# Outcome
-
-Within a month of this improvement being released, one customer on an older version upgraded with a contractual value of over £150k. They were initially not prepared to upgrade without this feature. We were also confident that the outcome of this project would improve customer retention and cover the potential loss of revenue.
 
 <CaseStudyFooter />

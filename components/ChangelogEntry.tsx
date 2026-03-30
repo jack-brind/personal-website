@@ -21,7 +21,6 @@ export function ChangelogEntry({
         {image && (
           <div className="mt-4">
             <Figure
-              id={`changelog-${title}`}
               src={image.src}
               alt={image.alt}
               width={image.width}

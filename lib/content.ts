@@ -1,12 +1,15 @@
 import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
+import type { CSSProperties } from "react";
 
 interface BaseFrontmatter {
   title: string;
   description: string;
   date?: string;
   image?: string;
+  imageStyle?: CSSProperties;
+  imageContainerStyle?: CSSProperties;
   readtime?: number;
   ogImage?: string;
   ogTitle?: string;
@@ -66,11 +69,7 @@ function readDirectory(localPath: string): Promise<string[]> {
   return fs.readdir(path.join(process.cwd(), localPath));
 }
 
-const contentCache = new Map<string, ContentItem[]>();
-
 export async function getAllContent(type: string): Promise<ContentItem[]> {
-  if (contentCache.has(type)) return contentCache.get(type)!;
-
   const fileNames: string[] = await readDirectory(`/content/${type}`);
   const items: ContentItem[] = [];
 
@@ -92,14 +91,10 @@ export async function getAllContent(type: string): Promise<ContentItem[]> {
     return a.date < b.date ? 1 : -1;
   });
 
-  contentCache.set(type, sorted);
   return sorted;
 }
 
 export async function getAllSlugs(type: string): Promise<string[]> {
-  if (contentCache.has(type)) {
-    return contentCache.get(type)!.map((item) => item.slug);
-  }
   const fileNames = await readDirectory(`/content/${type}`);
   return fileNames
     .filter((name) => name.endsWith(".mdx"))

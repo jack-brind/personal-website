@@ -1,6 +1,6 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { ComponentPropsWithoutRef } from "react";
-import { Figure, InlineImage } from "@/components/Figure";
+import { Figure } from "@/components/Figure";
 import CaseStudyFooter from "@/components/CaseStudyFooter";
 import { SmartLink } from "@/components/SmartLink";
 
@@ -17,7 +17,6 @@ const mdxComponents = {
     <SmartLink href={href ?? "#"}>{children}</SmartLink>
   ),
   Figure,
-  InlineImage,
   CaseStudyFooter,
   SmartLink,
 };
