@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./global.css";
 import LayoutClient from "../components/LayoutClient";
 import { Toaster } from "@/components/ui/Sonner";
+import { Agentation } from "agentation";
 
 const sans = localFont({
   src: [
@@ -70,9 +71,8 @@ export default function RootLayout({
       className={`${sans.variable} ${display.variable} ${mono.variable} ${serif.variable}`}
     >
       <body className="font-sans flex flex-col gap-12 w-2xl m-auto min-h-screen mt-24 mb-16">
-        <LayoutClient>
-          {children}
-        </LayoutClient>
+        <LayoutClient>{children}</LayoutClient>
+        {process.env.NODE_ENV === "development" && <Agentation />}
         <Toaster />
       </body>
     </html>

@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import { LuCopy, LuCheck, LuCopyCheck, LuGithub } from "react-icons/lu";
+import { LuCopy, LuCheck, LuCopyCheck } from "react-icons/lu";
 import { Button } from "./ui/Button";
+import Image from "next/image";
 
 export function RichLinkActions({
   href,
@@ -30,27 +31,31 @@ export function RichLinkActions({
   }
 
   return (
-    <div className="flex flex-col gap-1 shrink-0">
+    <div className="flex items-center gap-2 shrink-0 opacity-0 group-hover:opacity-100">
       {sourceUrl && (
-        <a
-          href={sourceUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <Button variant="ghost" size="icon-xs" asChild>
-            <span>
-              <LuGithub />
-            </span>
-          </Button>
-        </a>
+        <Button variant="ghost" size="icon-sm" asChild>
+          <a
+            href={sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src="/logos/github.png"
+              alt="GitHub logo"
+              width={16}
+              height={16}
+              className="opacity-75 dark:invert dark:opacity-60"
+            />
+          </a>
+        </Button>
       )}
-      <Button variant="ghost" size="icon-xs" onClick={handleCopy}>
+      <Button variant="ghost" size="icon-sm" onClick={handleCopy}>
         <LuCopy
-          className={`transition-all duration-200 ${copied ? "opacity-0 blur-[1px]" : "opacity-100 blur-0"}`}
+          className={`text-secondary transition-all duration-200 ${copied ? "opacity-0 blur-[1px]" : "opacity-100 blur-0"}`}
         />
         <LuCheck
-          className={`absolute transition-all duration-200 ${copied ? "opacity-100 blur-0" : "opacity-0 blur-[1px]"}`}
+          className={`text-secondary absolute transition-all duration-200 ${copied ? "opacity-100 blur-0" : "opacity-0 blur-[1px]"}`}
         />
       </Button>
     </div>

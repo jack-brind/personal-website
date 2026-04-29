@@ -1,13 +1,66 @@
 ---
 title: "Personal Finances"
-description: "My wife and I had outgrown our Google Sheet. So I built a proper replacement – a full-stack React app with Supabase, authentication, and enough financial calculation logic to remind me that I am not a mathematician."
+description: "A purpose-built app I built for me and my wife to track our income, outgoings, savings, mortgages, and travel all in one place."
 prodUrl: "https://www.brindfinances.app/"
 date: "2026-01-01"
-image: "side-project-images/finance-widgets-2"
+image: "side-project-images/pf-finance-widgets"
 imageStyle:
   objectFit: "contain"
   margin: "0.5rem"
 techStack: ["React", "TypeScript", "Tailwind", "Supabase"]
 ---
 
-Content goes here...
+## What we had before
+
+Before this app, my wife and I had a Google Sheet that did the job, but it wasn't ideal. I know spreadsheets are made for this kind of thing, but it never felt like the right fit for what we actually needed. Because of the canvas nature of spreadsheets, there's no implicit structure, hierarchy, or separation between the thing that does the calculation and the result of it. It always felt fragile because it's so easy to accidentally change a value and break the calculations. Ours had also gradually accumulated orphaned calculations in random corners and had become over-complicated. For something as important as our finances, that was not ideal.
+
+## A chance to reset
+
+Our situation also has enough moving parts that a spreadsheet was always going to struggle with. We split our individual commitments proportionally by net pay, we have separate savings pots, our mortgage is made up of 2 sub account products at different rates with different end dates. The spreadsheet was beginning to bend itself around the complexity rather than accommodating it. Building the app also gave us a good opportunity to step back and restructure how we think about our finances from scratch, rather than just porting the same mess into a new format.
+
+## Built for how we actually manage our finances
+
+What I wanted was something where the engine was out of reach and the surface was just the information we needed, structured clearly and accessible to both of us. We have a shared login, per-person breakdowns, a proper audit trail in Supabase, and dedicated views for our mortgages, savings, and holidays. Now, instead of worrying that a small change would cause the whole calculation pipeline to unravel, updates or adjustments feel predictable, reliable, and robust in a way the spreadsheet never did.
+
+You can see the demo [here](https://www.brindfinances.app/).
+
+<Figure
+  src="/side-project-images/pf-homepage-light.png"
+  alt="Personal finances homepage in light mode"
+  caption="Personal Finances Homepage"
+  width="1440"
+  height="900"
+/>
+
+<Figure
+  src="/side-project-images/pf-holiday-page.png"
+  alt="Personal finances holidays page"
+  caption="Tracking holiday (vacation) budgets is easy on the Holidays page"
+  width="1440"
+  height="900"
+/>
+
+<Figure
+  src="/side-project-images/pf-mortgage-page.png"
+  alt="Personal finances mortgage page in light mode"
+  caption="The mortgage page showing our 2 mortgage sub accounts"
+  width="1440"
+  height="900"
+/>
+
+<Figure
+  src="/side-project-images/pf-mortgage-chart.png"
+  alt="Personal finances mortgage page chart in light mode"
+  caption="Mortgage page showing the monthly repayments chart"
+  width="1440"
+  height="900"
+/>
+
+<Figure
+  src="/side-project-images/pf-homepage-dark.png"
+  alt="Personal finances homepage in dark mode"
+  caption="The homepage shown in dark mode"
+  lightboxBorderBg="var(--color-border-dark)"
+  width="1440"
+  height="900"
+/>
