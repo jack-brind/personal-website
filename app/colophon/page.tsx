@@ -122,7 +122,7 @@ function ColophonPage() {
           contrast.
         </li>
       </ul>
-      <h2>Maintanence</h2>
+      <h2>Maintenance</h2>
       <p>
         This site is open source.{" "}
         <SmartLink

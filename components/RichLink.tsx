@@ -1,9 +1,10 @@
+import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import { RichLinkActions } from "./RichLinkActions";
 
 async function fetchOG(url: string) {
   try {
-    const res = await fetch(url, { next: { revalidate: 86400 } });
+    const res = await fetch(url);
     const html = await res.text();
     const get = (prop: string) =>
       html.match(
@@ -32,6 +33,10 @@ async function fetchOG(url: string) {
   }
 }
 
+const getCachedOG = unstable_cache(fetchOG, ["richlink-og"], {
+  revalidate: 86400,
+});
+
 export async function RichLink({
   href,
   sourceUrl,
@@ -39,19 +44,19 @@ export async function RichLink({
   href: string;
   sourceUrl?: string;
 }) {
-  const og = await fetchOG(href);
+  const og = await getCachedOG(href);
   const hostname = new URL(href).hostname;
 
   return (
-    <div className="flex items-stretch border rounded-2xl overflow-hidden hover:border-muted transition-colors">
+    <div className="not-prose group flex items-stretch border rounded-lg overflow-hidden bg-elevated transition-colors">
       <a
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex flex-1 items-center gap-4 no-underline"
+        className="flex flex-1 min-w-0 items-center gap-4 no-underline"
       >
         {og.image && (
-          <div className="relative w-32 h-full shrink-0">
+          <div className="relative w-38 h-full shrink-0">
             <Image
               src={og.image}
               alt={og.title ?? hostname}
@@ -61,16 +66,22 @@ export async function RichLink({
             />
           </div>
         )}
-        <div className="flex flex-col gap-1 min-w-0 py-3">
+        <div
+          className={`flex flex-col gap-1 min-w-0 py-2.5 pr-5${og.image ? "" : " pl-5"}`}
+        >
           <p className="text-body-sm font-semibold truncate">
             {og.title ?? hostname}
           </p>
-          {og.description && (
-            <p className="text-body-sm text-secondary line-clamp-2">
-              {og.description}
+          <div className="flex flex-col gap-0.5">
+            {og.description && (
+              <p className="text-body-xs text-secondary truncate">
+                {og.description}
+              </p>
+            )}
+            <p className="text-body-xs text-secondary font-medium">
+              {hostname}
             </p>
-          )}
-          <p className="text-body-sm text-secondary font-medium">{hostname}</p>
+          </div>
         </div>
       </a>
       <div className="flex items-center px-4">

@@ -26,6 +26,7 @@ function Lightbox({
   intrinsicHeight,
   containerRadius,
   lightboxBg,
+  lightboxBorderBg,
   onClose,
 }: {
   src: string;
@@ -37,6 +38,7 @@ function Lightbox({
   intrinsicHeight: number;
   containerRadius: number;
   lightboxBg: string;
+  lightboxBorderBg: string;
   onClose: () => void;
 }) {
   // overlayRef is on the wrapper <div> — the animated element that carries the
@@ -240,40 +242,46 @@ function Lightbox({
     >
       <div
         ref={backdropRef}
-        className="absolute inset-0 bg-default"
+        className="absolute inset-0 bg-dark"
         style={{ opacity: 0 }}
       />
-      {/* Wrapper carries the border, background and border-radius animation */}
+      {/* Wrapper carries the border, background and border-radius animation.
+          bg-elevated matches the article container so the semi-transparent border
+          composites identically in both states — no dark flash during close. */}
       <div
         ref={overlayRef}
         className="relative border rounded-lg overflow-hidden"
         style={{
           transformOrigin: "center",
           visibility: "hidden",
-          backgroundColor: lightboxBg,
           maxWidth: "calc(100vw - 4rem)",
+          backgroundColor: lightboxBorderBg,
         }}
       >
-        <Image
-          ref={imageInnerRef}
-          src={src}
-          alt={alt}
-          width={intrinsicWidth}
-          height={intrinsicHeight}
-          onLoad={runOpenAnimation}
-          style={{
-            display: "block",
-            maxWidth: "100%",
-            maxHeight: "calc(90vh - 4rem)",
-            width: "auto",
-            height: "auto",
-          }}
-        />
+        {/* Inner wrapper preserves lightboxBg as the image background (visible for
+            transparent images) without affecting the outer border region. */}
+        <div style={{ backgroundColor: lightboxBg }}>
+          <Image
+            ref={imageInnerRef}
+            src={src}
+            alt={alt}
+            width={intrinsicWidth}
+            height={intrinsicHeight}
+            onLoad={runOpenAnimation}
+            style={{
+              display: "block",
+              maxWidth: "100%",
+              maxHeight: "calc(90vh - 4rem)",
+              width: "auto",
+              height: "auto",
+            }}
+          />
+        </div>
       </div>
       {caption && (
         <p
           ref={captionRef}
-          className="relative text-center text-secondary font-serif italic text-base"
+          className="relative text-center text-muted font-serif italic text-base"
           style={{
             opacity: 0,
             transform: "translateY(6px)",
@@ -295,21 +303,32 @@ export function Figure({
   caption,
   width,
   height,
-  zoom = true,
-  border = true,
-  lightboxBg = "white",
+  zoom,
+  border,
+  priority,
+  lightboxBg = "#222222",
+  lightboxBorderBg = "var(--bg-elevated)",
   className,
 }: {
   src: string;
   alt: string;
   caption?: string;
-  width: number;
-  height: number;
-  zoom?: boolean;
-  border?: boolean;
+  width?: number | string;
+  height?: number | string;
+  zoom?: boolean | string;
+  border?: boolean | string;
+  priority?: boolean | string;
   lightboxBg?: string;
+  lightboxBorderBg?: string;
   className?: string;
 }) {
+  const w = Number(width);
+  const h = Number(height);
+  const hasDimensions = w > 0 && h > 0;
+  const showBorder = border !== false && border !== "false";
+  const showZoom = zoom !== false && zoom !== "false";
+  const isPriority = priority === true || priority === "true";
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [thumbnailRect, setThumbnailRect] = useState<DOMRect | null>(null);
   const mounted = useSyncExternalStore(
@@ -319,7 +338,7 @@ export function Figure({
   );
 
   const handleOpen = () => {
-    if (!zoom || !containerRef.current) return;
+    if (!showZoom || !containerRef.current) return;
     setThumbnailRect(containerRef.current.getBoundingClientRect());
   };
 
@@ -328,23 +347,26 @@ export function Figure({
       <div
         ref={containerRef}
         className={twMerge(
-          border && "border bg-elevated rounded-lg overflow-hidden",
-          zoom && "cursor-zoom-in",
+          showBorder && "border bg-elevated rounded-lg overflow-hidden",
+          showZoom && "cursor-zoom-in",
           className,
         )}
         onClick={handleOpen}
         style={thumbnailRect ? { visibility: "hidden" } : undefined}
       >
-        <Image
-          src={src}
-          alt={alt}
-          width={width}
-          height={height}
-          className="w-full h-auto"
-        />
+        {hasDimensions && (
+          <Image
+            src={src}
+            alt={alt}
+            width={w}
+            height={h}
+            priority={isPriority}
+            className="w-full h-auto"
+          />
+        )}
       </div>
       {caption && (
-        <figcaption className="font-serif italic text-secondary font-medium mt-1 mb-4">
+        <figcaption className="font-serif italic text-sm text-secondary font-medium mt-1 mb-4">
           {caption}
         </figcaption>
       )}
@@ -357,10 +379,11 @@ export function Figure({
             caption={caption}
             thumbnailRect={thumbnailRect}
             containerRef={containerRef}
-            intrinsicWidth={width}
-            intrinsicHeight={height}
-            containerRadius={border ? 8 : 0}
+            intrinsicWidth={w}
+            intrinsicHeight={h}
+            containerRadius={showBorder ? 8 : 0}
             lightboxBg={lightboxBg}
+            lightboxBorderBg={lightboxBorderBg}
             onClose={() => setThumbnailRect(null)}
           />,
           document.body,

@@ -56,9 +56,9 @@
   text-rendering: optimizeLegibility;
 }
 
-/* 16px base */
+/* 15px base */
 @utility text-body {
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   font-weight: 475;
   line-height: 1.625;
@@ -222,6 +222,7 @@
   --bg-default: oklch(0.99 0 0);
   --bg-elevated: oklch(1 0 0);
   --bg-sunken: oklch(0.97 0 0);
+  --bg-dark: oklch(0.22 0 250);
   --fg-primary: oklch(0.33 0.013 273);
   --fg-secondary: oklch(0.54 0.012 262);
   --fg-muted: oklch(0.67 0.013 260);
@@ -236,6 +237,7 @@ html.dark {
   --bg-default: oklch(0.16 0 0);
   --bg-elevated: oklch(0.2 0 264);
   --bg-sunken: oklch(0.14 0 0);
+  --bg-dark: oklch(0.22 0 250);
   --fg-primary: oklch(0.86 0 259);
   --fg-secondary: oklch(0.69 0.012 262);
   --fg-muted: oklch(0.67 0.013 260);
@@ -251,6 +253,7 @@ html.dark {
   --color-default: var(--bg-default);
   --color-elevated: var(--bg-elevated);
   --color-sunken: var(--bg-sunken);
+  --color-dark: var(--bg-dark);
 
   /* Text colours */
   --color-primary: var(--fg-primary);

@@ -8,19 +8,25 @@ function NowPage() {
       <h1 className="mb-14">Now</h1>
 
       <Figure
-        src="/test-now-image.png"
-        alt="alt tag for now image"
-        caption="This is a test image to debug issues with the Figure.tsx component"
-        width={672}
-        height={378}
+        src="/woodland-walk2.png"
+        alt="Photo of me and my daughter on a walk"
+        caption="Me and my daughter on a walk. Photo taken by my talented wife."
+        lightboxBorderBg="var(--color-border-dark)"
+        width="1340"
+        height="800"
       />
 
       <h2>Work</h2>
       <p>
-        I'm focused on a core Workflows initiative at PandaDoc that connects two
-        major parts of the product into a unified surface. This is a complex,
-        cross-domain project teaching me to work at higher altitude and keep
-        multiple teams aligned.
+        I'm focused on a 0 → 1 Workflows initiative at PandaDoc that connects
+        two major parts of the product into a brand new orchestration surface.
+        This is a complex, cross-domain project teaching me to work at higher
+        altitude and keep multiple teams and stakeholders aligned.
+      </p>
+      <p>
+        I'm also building a prototyping playground for the Design team called
+        ProtoPanda that removes technical barriers for designers prototyping in
+        code with the PandaDoc Design System.
       </p>
 
       <h2>Learning</h2>
@@ -31,7 +37,6 @@ function NowPage() {
       <p>Next up:</p>
       <ul>
         <li>Animations (using Emil Kowalski's Animations on the Web)</li>
-        <li>Testing with Jest</li>
       </ul>
 
       <h2>Building</h2>
@@ -47,15 +52,14 @@ function NowPage() {
       <ul>
         <li>
           Now:{" "}
-          <SmartLink href="https://www.hachettebookgroup.com/titles/david-baldacci/to-die-for/9781538757901/">
-            To Die For by David Baldacci
-          </SmartLink>{" "}
-          – The third book in the 6:20 man series.
+          <SmartLink href="https://books.google.co.uk/books/about/Project_Hail_Mary.html?id=oxyOEAAAQBAJ">
+            Project Hail Mary by Andy Weir
+          </SmartLink>
         </li>
         <li>
           Previous:{" "}
-          <SmartLink href="https://rosenfeldmedia.com/books/the-staff-designer/?srsltid=AfmBOoq1BN6Iy57dz7WvfUWzh-wA0NiP25WRs9-Mgoeg2Fd7Mc82Df72">
-            The Staff Designer by Catt Small
+          <SmartLink href="https://books.google.co.uk/books/about/To_Die_For_A_Travis_Devine_Novel_3.html?id=X3sSEQAAQBAJ">
+            To Die For by David Baldacci
           </SmartLink>
         </li>
       </ul>
