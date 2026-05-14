@@ -29,7 +29,7 @@ async function CaseStudyPage({
       <p className="font-medium">
         {frontmatter.company}, {new Date(frontmatter.date).getFullYear()}
       </p>
-      <p className="mb-12 text-secondary font-medium">
+      <p className="text-secondary font-medium">
         {frontmatter.description}
       </p>
       <MDXContent source={content} />

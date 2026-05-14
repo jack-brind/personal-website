@@ -42,8 +42,12 @@ function ProjectItems({
             >
               <div className="flex flex-col gap-3.5">
                 <div
-                  className="relative w-full h-48 border rounded-2xl bg-sunken overflow-hidden"
-                  style={item.imageContainerStyle}
+                  className="relative w-full h-48 border rounded-2xl bg-sunken bg-cover bg-center overflow-hidden"
+                  style={
+                    item.backgroundImage
+                      ? { backgroundImage: `url(${item.backgroundImage})` }
+                      : undefined
+                  }
                 >
                   {item.image && (
                     <div
@@ -54,6 +58,8 @@ function ProjectItems({
                         src={`/${item.image}.png`}
                         alt="image"
                         fill
+                        sizes="(max-width: 768px) 50vw, 320px"
+                        priority
                         style={{ objectFit, objectPosition }}
                       />
                     </div>

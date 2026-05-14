@@ -3,6 +3,7 @@ import { ComponentPropsWithoutRef } from "react";
 import { Figure } from "@/components/Figure";
 import CaseStudyFooter from "@/components/CaseStudyFooter";
 import { SmartLink } from "@/components/SmartLink";
+import { CountdownCode } from "@/components/showcase/CountdownCode";
 
 // Map MDX headings to ensure only one semantic h1 per page
 // Nicer Markdown authoring experience where `#` maps to h2
@@ -19,6 +20,7 @@ const mdxComponents = {
   Figure,
   CaseStudyFooter,
   SmartLink,
+  CountdownCode,
 };
 
 export default function MDXContent({ source }: { source: string }) {

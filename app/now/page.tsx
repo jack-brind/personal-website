@@ -8,7 +8,7 @@ function NowPage() {
       <h1 className="mb-14">Now</h1>
 
       <Figure
-        src="/woodland-walk2.png"
+        src="/woodland-walk.png"
         alt="Photo of me and my daughter on a walk"
         caption="Me and my daughter on a walk. Photo taken by my talented wife."
         lightboxBorderBg="var(--color-border-dark)"
