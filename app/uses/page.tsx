@@ -54,6 +54,12 @@ const designEngineeringTools = [
     description: "I use Claude Code as a VS Code extension.",
     link: "https://claude.ai/code",
   },
+  {
+    logo: "/logos/cursor.png",
+    name: "Cursor",
+    description: "My choice of IDE at work",
+    link: "https://cursor.com/",
+  },
 ];
 
 const productivityTools = [

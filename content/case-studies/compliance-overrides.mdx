@@ -1,75 +1,140 @@
 ---
-title: "Implementing auditable compliance overrides in itris"
+title: "How we introduced overrides without weakening the compliance model"
 company: "itris"
 date: "2024-01-01"
 image: "case-study-images/override-dialogs"
+backgroundImage: "/bg-test1.png"
 imageStyle:
   objectFit: "contain"
   margin: "24px"
   transform: "skewX(-10deg) rotate(5deg)"
-description: "How a 2FA-inspired override unlocked £150k in blocked revenue — without compromising compliance"
+description: "I designed a 2FA-inspired override flow that unlocked a $200k upgrade without weakening the compliance model."
 ---
 
 <Figure
   src="/case-study-images/override-dialogs.png"
-  alt="Dashboard"
+  alt="Skewed perspective image of the override code generation and usage dialogs"
   width="4144"
   height="2096"
   border="false"
   priority
-  className="skew-reverse p-6"
+  showBorder="false"
+  className="my-10"
+  lightboxBorder="false"
+  lightboxBg="transparent"
 />
 
-# The problem that was costing us customers
+## A strict model that broke down in the real world
 
-Compliance in staffing software is binary by design — either a candidate is cleared to work, or they aren't. At itris, that meant recruiters couldn't create a placement record until every check was satisfied. For most sectors, this works. For education, it didn't.
+Compliance sits at the heart of temporary and contract recruitment, and staffing agencies are obligated to ensure that every worker they place meets the requirements of the role including background checks, qualifications and rights to work.
 
-Teachers are often placed months before a school year starts. Compliance checks — DBS certificates, right to work documents, qualifications — take time to process, but clients need contracts confirmed early. Recruiters were stuck: they couldn't place, couldn't invoice, and couldn't satisfy clients. So they found workarounds. Messy, audit-unfriendly ones.
+When I redesigned compliance in itris in 2021, one of the principles I helped establish was that compliance should be binary. Users were either warned about a problem and let you continue, or it was strict and blocked the placement entirely. This lack of middle ground meant that there was no place for nuance for customers who wanted strict compliance. That logic was sound in principle, but it broke down in messier real-world workflows.
 
-One customer told us directly they wouldn't upgrade to the latest version without a solution to this. Their contract was worth over £150k.
+One customer in the education sector told us that they confirmed placements of teachers months in advance:
 
-# What we actually needed to solve
+> _We place some of our teachers before schools close for the summer so we confirm the placement and then work on getting DBS checks done before they start. How it works now doesn't let us do this, so some of our consultants are faking compliance to get around it which we don't want._
 
-The temptation was to soften compliance — introduce a grey area between "blocked" and "allowed." We pushed back on that. The whole point of preventative compliance is that it's strict. Blurring the line would erode trust in the system and create liability for our customers.
+That exposed two different problems:
 
-The real problem wasn't that compliance was too strict. It was that there was no safe mechanism for an authorised person to say _"I know this isn't compliant yet — I'm accountable for that decision."_
+- **User problem:** recruiters needed to confirm placements now, trigger downstream workflows, and complete compliance later.
+- **Business problem:** the product was blocking legitimate customer workflows, encouraging bad workarounds, and putting adoption and revenue at risk.
 
-# The insight that changed everything
+They weren’t a one-off. Many other customers in education and other sectors operated the same way. This represented a weakness in the compliance workflows and, without catering for nuance, users were circumventing a rigid system. This encouraged the wrong behaviour and created more problems than it solved.
 
-One request kept coming up in customer feedback: a manager should be able to type in a password to unblock a placement. It made sense intuitively, but it was exploitable — if anyone saw the password, they could use it indefinitely with no trace.
+## We needed exceptions without weakening compliance
 
-That's when I started thinking about how modern apps handle sensitive one-time authorisation: two-factor authentication. What if, instead of a static password, a privileged user could generate a time-limited, single-use code? The compliance block would still exist. The candidate would still show as non-compliant. But an authorised person could issue a code, and the override would be logged — who issued it, when, and for which placement.
+We anticipated this issue because we had a solution in place historically. Prior to the compliance redesign, privileged users could override a blocked placement by entering their password directly into it. However, this feature was removed because it was weak from a trust and accountability perspective, and adoption had been low.
 
-It threads the needle: compliance teams keep their oversight, recruiters get unblocked, and there's a clear audit trail if anything is ever questioned.
+As a result, some of the feedback and requests were to re-introduce the password option, but I quickly ruled this out. Passwords are reusable and can be learned and shared, and therefore, prone to exploitation. They also don't work at all for hybrid or remote teams.
 
-# Three decisions that shaped the solution
+Another suggestion was to introduce a softer middle state somewhere between lenient and strict compliance. That would have solved the immediate workflow issue, but at the cost of weakening the model itself. We had intentionally designed compliance to be binary, so adding a third state would blur the line, create more room for interpretation, and add complexity across reporting and behaviour.
 
-1. Non-compliance stays visible: Overriding the block doesn't mark the candidate as compliant. They're still flagged in compliance reports. The override is a documented exception, not a status change. This was important for our customers' regulatory obligations.
-2. Code generation is privileged: Only designated users can generate override codes. This keeps the accountability chain clear — a recruiter can't unblock themselves; they need sign-off from someone with authority.
-3. Audit trail is first-class: Every override is logged with the issuer, timestamp, and context. This wasn't an afterthought — it was central to the pitch internally. Without it, the feature would have created liability; with it, it reduced it.
+The real question was: _How do we keep compliance strict, while still allowing an authorised person to make an explicit exception in a specific case?_
 
-# What happened
+Once I framed it that way, the shape of the solution became clearer. A password was directionally right because it represented approval on demand, but the trust model was wrong. What I was really describing was closer to 2FA: a one-time, time-limited act of verification tied to a single event.
 
-Within a month of release, the customer who had refused to upgrade came on board. £150k contract, directly attributable to this feature. We were also confident it would improve retention more broadly — this wasn't an edge case request; it was a pattern across multiple customers in education and similar sectors.
+# A 2FA-inspired override flow
 
-# What I'd do differently
-
-I'd have pushed to define the audit trail UI earlier in the process. We got it right, but it was a late conversation — and for a feature where accountability is the whole point, the way that log is surfaced to compliance managers deserved more design attention than we gave it at the time.
+I proposed the solution to the PM and Engineer on the project, and we built an override mechanism where a privileged user could generate a unique, time-limited code and share it with the recruiter trying to confirm the placement.
 
 <Figure
-  src="/case-study-images/compliance-audit.png"
-  alt="Dashboard"
-  caption="Compliance override audit trail"
+  src="/case-study-images/generate-code.png"
+  alt="Screenshot of a generate code dialog"
+  caption="Fig 01. Privileged users can generate an override code"
   width="1440"
   height="900"
+  lightboxBorder="false"
+  lightboxBg="transparent"
+  className="mt-10 mb-6"
 />
 
+The recruiter would enter that code on the blocked placement, the placement would proceed, the code would expire, and the action would be recorded in an audit log.
+
 <Figure
-  src="/case-study-images/components-override.png"
-  alt="Dashboard"
-  caption="Improvements to some components to support the new feature"
+  src="/case-study-images/enter-code.png"
+  alt="Screenshot of an override dialog for users to enter a code"
+  caption="Fig 02. Users enter the code to unblock the placement"
   width="1440"
   height="900"
+  lightboxBorder="false"
+  lightboxBg="transparent"
+  className="mt-10 mb-6"
 />
+
+This solved the problem while also preserving the core compliance model. The placement could proceed, but only because someone with the right level of authority made a specific, time-bound decision on that specific case.
+
+# The hardest decision was what not to change
+
+This solution introduced questions about what should happen to the worker's status after an override. The PM suggested adding a distinct placement status to reflect that a compliance override had occurred. While the intention was to improve visibility and clarity, I felt that it weakened an important architectural boundary. The worker was still not compliant and the only thing that changed was that an authorised user had explicitly approved the placement. The override should propagate upward as _contextual information_, not redefine the placement’s actual state. I argued that a new placement status risked undermining the integrity of the compliance model itself and introduced ambiguity across reporting and dashboards. We agreed to keep the placement status intact, and introduce a flag on the compliance items that were overridden.
+
+<Figure
+  src="/case-study-images/compliance-report.png"
+  alt="A cropped view of the compliance card in a compliance report showing a non-compliant badge and override audit"
+  caption="Fig 03. Compliance reports highlight non-compliance with an override audits"
+  width="1440"
+  height="900"
+  lightboxBorder="false"
+  lightboxBg="transparent"
+  className="mt-10 mb-6"
+/>
+
+## Accountability was the real cornerstone
+
+The most important part of this feature was the audit trail. Each time a code was generated and used, an entry would be added to the compliance audit trail. This kept people accountable and provided the history that could hold up to scrutiny in any potential disputes. Both the code issuer and the recipient could attach notes independently: one to explain why the override was requested, the other to explain why it was granted. Two separate records were harder to dispute and kept both parties honest.
+
+<Figure
+  src="/case-study-images/override-item.png"
+  alt="A cropped view of the compliance card showing a non-compliant item that has been overridden"
+  caption="Fig 04. Compliance items that have been overridden are clearly shown"
+  width="1440"
+  height="900"
+  lightboxBorder="false"
+  lightboxBg="transparent"
+  className="mt-10 mb-6"
+/>
+
+The issuer also receives a notification when the code is used, with a link to the placement. Privileged users are ultimately the ones giving the green light, and they needed confidence that the code was used as intended. The notification closes the loop without adding friction to the flow.
+
+## Craft decisions that reduced friction
+
+There were also a few smaller design decisions that helped the feature feel more considered.
+
+In some cases, the user requesting the override already had permission to grant one. Asking them to generate a code for themselves would have been unnecessary, so we applied the authorisation behind the scenes and kept the input visible for notes in the issuer's context.
+
+When showing the generated code, I wanted copying to feel effortless. Instead of using a small copy button, I made the whole element the target. It was a small application of [Fitts's law](https://lawsofux.com/fittss-law/), but it made the interaction faster and more forgiving.
+
+The expiry timer introduced another small quality issue. Being right-aligned, the digits changed width in Inter (our default font), so the timer bounced visually as it counted down. I fixed this by adding `tabular-nums` to stabilise the layout.
+
+<CountdownCode />
+
+## One customer's blocker became the business case
+
+Within a month of shipping, a long-standing customer upgraded under a contract worth over $200k. They had delayed committing because compliance overrides were critical to their workflow, and they weren’t willing to move forward without a trusted solution in place.
+
+Beyond the upgrade itself, the feature also addressed a broader retention risk. Customers with strict compliance needs no longer had to choose between operational reality and system integrity.
+
+## What I'd do next
+
+The biggest compromise in the shipped version was that the request and approval workflow still happened outside the product. Users had to ask for a code in Slack, Teams, or in person, and the code was shared back through external channels. It was the right scope trade-off for the problem we were solving at the time, but the better long-term solution would be an asynchronous approval workflow inside the product, with pending states, approval queues, better notifications, and a clearer sense that a request had been made and could be picked up later. That would let recruiters move on with other work instead of waiting in a synchronous loop.
 
 <CaseStudyFooter />

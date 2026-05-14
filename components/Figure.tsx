@@ -27,6 +27,7 @@ function Lightbox({
   containerRadius,
   lightboxBg,
   lightboxBorderBg,
+  lightboxBorder,
   onClose,
 }: {
   src: string;
@@ -39,6 +40,7 @@ function Lightbox({
   containerRadius: number;
   lightboxBg: string;
   lightboxBorderBg: string;
+  lightboxBorder: boolean;
   onClose: () => void;
 }) {
   // overlayRef is on the wrapper <div> — the animated element that carries the
@@ -242,7 +244,7 @@ function Lightbox({
     >
       <div
         ref={backdropRef}
-        className="absolute inset-0 bg-dark"
+        className="absolute inset-0 bg-default"
         style={{ opacity: 0 }}
       />
       {/* Wrapper carries the border, background and border-radius animation.
@@ -250,16 +252,17 @@ function Lightbox({
           composites identically in both states — no dark flash during close. */}
       <div
         ref={overlayRef}
-        className="relative border rounded-lg overflow-hidden"
+        className={twMerge(
+          "relative rounded-lg overflow-hidden",
+          lightboxBorder && "border",
+        )}
         style={{
           transformOrigin: "center",
           visibility: "hidden",
           maxWidth: "calc(100vw - 4rem)",
-          backgroundColor: lightboxBorderBg,
+          backgroundColor: lightboxBorder ? lightboxBorderBg : undefined,
         }}
       >
-        {/* Inner wrapper preserves lightboxBg as the image background (visible for
-            transparent images) without affecting the outer border region. */}
         <div style={{ backgroundColor: lightboxBg }}>
           <Image
             ref={imageInnerRef}
@@ -281,7 +284,7 @@ function Lightbox({
       {caption && (
         <p
           ref={captionRef}
-          className="relative text-center text-muted font-serif italic text-base"
+          className="relative text-center text-secondary font-serif italic text-base"
           style={{
             opacity: 0,
             transform: "translateY(6px)",
@@ -306,8 +309,9 @@ export function Figure({
   zoom,
   border,
   priority,
-  lightboxBg = "#222222",
+  lightboxBg = "#ffffff",
   lightboxBorderBg = "var(--bg-elevated)",
+  lightboxBorder = true,
   className,
 }: {
   src: string;
@@ -320,6 +324,7 @@ export function Figure({
   priority?: boolean | string;
   lightboxBg?: string;
   lightboxBorderBg?: string;
+  lightboxBorder?: boolean | string;
   className?: string;
 }) {
   const w = Number(width);
@@ -327,6 +332,8 @@ export function Figure({
   const hasDimensions = w > 0 && h > 0;
   const showBorder = border !== false && border !== "false";
   const showZoom = zoom !== false && zoom !== "false";
+  const showLightboxBorder =
+    lightboxBorder !== false && lightboxBorder !== "false";
   const isPriority = priority === true || priority === "true";
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -343,13 +350,12 @@ export function Figure({
   };
 
   return (
-    <figure className="flex flex-col gap-2 my-10">
+    <figure className={twMerge("flex flex-col gap-2", className)}>
       <div
         ref={containerRef}
         className={twMerge(
           showBorder && "border bg-elevated rounded-lg overflow-hidden",
           showZoom && "cursor-zoom-in",
-          className,
         )}
         onClick={handleOpen}
         style={thumbnailRect ? { visibility: "hidden" } : undefined}
@@ -384,6 +390,7 @@ export function Figure({
             containerRadius={showBorder ? 8 : 0}
             lightboxBg={lightboxBg}
             lightboxBorderBg={lightboxBorderBg}
+            lightboxBorder={showLightboxBorder}
             onClose={() => setThumbnailRect(null)}
           />,
           document.body,

@@ -9,7 +9,7 @@ interface BaseFrontmatter {
   date?: string;
   image?: string;
   imageStyle?: CSSProperties;
-  imageContainerStyle?: CSSProperties;
+  backgroundImage?: string;
   readtime?: number;
   ogImage?: string;
   ogTitle?: string;
