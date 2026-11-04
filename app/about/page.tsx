@@ -11,12 +11,12 @@ function AboutPage() {
       <div className="flex items-start justify-between">
         <div className="flex flex-col w-102">
           <p className="mb-6">
-            I'm Jack, a Senior Product Designer from the UK, working at PandaDoc
-            in the Workflows domain. Previously, I was the first design hire at
-            itris, a recruitment CRM, where I worked solo for over a decade
-            designing a complete platform rewrite. Being the only designer meant
-            I was involved in everything from product strategy and
-            specifications to getting into the code to smooth out rough edges.
+            I'm Jack, a product designer and tinkerer from the UK, working at
+            PandaDoc in the Customer Value domain. Previously, I was the first
+            design hire at itris, a recruitment CRM, where I worked solo for
+            over a decade designing a complete platform rewrite. Being the only
+            designer meant I was involved in everything from product strategy
+            and PRDs to getting into the code to smooth out rough edges.
           </p>
           <p className="mb-20">
             I came to design through writing after finishing my Philosophy

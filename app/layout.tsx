@@ -70,7 +70,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${sans.variable} ${display.variable} ${mono.variable} ${serif.variable}`}
     >
-      <body className="font-sans flex flex-col gap-12 w-2xl m-auto min-h-screen mt-24 mb-16">
+      <body className="font-sans flex flex-col gap-8 w-2xl m-auto min-h-screen mt-24 mb-16">
         <LayoutClient>{children}</LayoutClient>
         {process.env.NODE_ENV === "development" && <Agentation />}
         <Toaster />

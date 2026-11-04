@@ -1,24 +1,28 @@
 import { SmartLink } from "./SmartLink";
-import { Separator } from "./ui/Separator";
+// import { Separator } from "./ui/Separator";
 
 function Footer() {
   return (
     <div className="flex flex-col gap-12">
-      <Separator />
+      {/* <Separator /> */}
       <footer>
         <ul className="flex items-center gap-6 text-secondary">
-          <SmartLink href="/now" variant="nav">
+          {/* <SmartLink href="/now" variant="nav">
             Now
-          </SmartLink>
-          <SmartLink href="/uses" variant="nav">
+          </SmartLink> */}
+          {/* <SmartLink href="/uses" variant="nav">
             Uses
-          </SmartLink>
-          <SmartLink href="/colophon" variant="nav">
+          </SmartLink> */}
+          <SmartLink
+            href="/colophon"
+            variant="nav"
+            className="text-sm font-medium mt-8"
+          >
             Colophon
           </SmartLink>
-          <SmartLink href="/changelog" variant="nav">
+          {/* <SmartLink href="/changelog" variant="nav">
             Changelog
-          </SmartLink>
+          </SmartLink> */}
         </ul>
       </footer>
     </div>

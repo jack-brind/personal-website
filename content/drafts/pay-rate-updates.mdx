@@ -1,0 +1,93 @@
+---
+title: "Building a compliant bulk rate update system for staffing agencies"
+company: "itris"
+backgroundImage: "/noise-sand.png"
+image: "case-study-images/rates-list"
+imageStyle:
+  objectFit: "cover"
+  margin: "20px"
+  border: "1px solid rgb(0,0,0,0.08)"
+  borderRadius: "6px"
+  overflow: "hidden"
+description: "How a reference-linking model turned a day of error-prone manual work into a one-minute bulk operation, protecting $450k ARR and removing a meaningful compliance risk for staffing agencies."
+date: "2024-01-01"
+---
+
+<Figure
+  src="/case-study-images/rates-list.png"
+  alt="Screenshot of a the global rates settings page"
+  width="1440"
+  height="900"
+  priority
+  className="mt-10 mb-6"
+/>
+
+Paying an agency worker below the minimum wage in the UK can trigger a £20,000 penalty per worker, with public naming for those found to have underpaid workers. For staffing agencies managing hundreds of live placements across multiple rate schedules, that made rate updates more than an admin task. The manual workflow was slow, hard to audit, and created a significant compliance risk.
+
+> _As a local authority, our pay scales update every year for our workforce, including temporary workers. We have nearly 500 placements at the moment so it's a big task to manually update each record with the new pay rate._
+
+This was the feedback we kept hearing. To understand the scale, I ran a quick test, and updating a single placement rate took about 20 seconds, so \~180 rates an hour. If you have 500 of them, that is most of a working day. For larger agencies with 1,000+ placements, it's a full working day.
+
+However, the time cost wasn't the worst part. The existing company search in itris had no rate-based criteria, so teams couldn't easily identify _which_ placements needed updating. Adding rate-based options to search would have solved a niche use case, caused introduced performance concerns, and surfaced UI complexity that didn't fit existing patterns. It also still wouldn't have solved the core problem, because once you'd found the placements, you'd still be updating them one at a time. As a result, customers were left manually scanning through lists, where there is a danger of missing one and risking compliance exposure that is hard to audit.
+
+The customers affected represented roughly $450k ARR at risk of churn, and the lack of bulk rate functionality was a recurring friction point in sales conversations with staffing agencies. Beyond retention, this work was also an early investment in closing a clear product gap in a strategically important segment.
+
+## The technical reality we were designing within
+
+With unanimous customer feedback and well-documented regulations, the real challenges were technical so that's where I focused my attention. The rate architecture was built around data integrity, with every placement relying on a floating base rate that always remained active, plus alternative rates that temporarily overrode it for specific conditions such as night shifts or overtime.
+
+The rule underpinning all of this was existing rates are immutable. Historical timesheet entries link to specific rate records and if you change a rate, you change history and break the audit trail that finance teams depend on. Because I’d previously designed the underlying rate architecture, I knew the obvious solution of linking placement rates directly to a global rate so updates cascade automatically would have retroactively altered historical timesheet calculations. The challenge was to make bulk updates possible without breaking the historical integrity the whole rate system depended on.
+
+## The solution: reference-linking, not live-linking
+
+After I had sketched a few possible approaches with the PM, the backend engineer tested how each one would behave against the existing rate architecture. That helped us align on the approach that preserved data integrity while still enabling bulk updates. Rather than linking placement rates directly to a global rate record, we created an independent copy of the rate for each placement, with a reference back to its origin. It was like a rate's barcode. That reference became the mechanism for bulk updates whereby we could identify all related placement rates, then create new rate records without modifying historical ones.
+
+The result was a model where every placement kept its own complete rate history, global updates became targeted bulk operations, and the relationship between global and placement rates remained fully traceable.
+
+## Designing the system
+
+Rather than a flat list, I organised rates into groups that worked like folders. A tree structure felt more intuitive for agencies managing rates across industries, job functions, and regions, and it combined organisation with filtering in a single interaction where selecting a group immediately scoped the rate list. I explored a flat list with filters, but the tree better matched how users think about sub-categorised rate structures.
+
+One useful detail was that if a user had a group selected when creating a new rate, that group was pre-populated in the modal, so the user's intent was inferred instead of forcing them to re-select it.
+
+**\[📸 Rate Group modal\]** _Group creation with hierarchy breadcrumb._
+
+Once a global rate was assigned to a placement, the name, pay, and charge became read-only. I advocated for that constraint, and it was a point of disagreement with the PM. His view was that if the rate would still switch later anyway, keeping those fields editable would be simpler, but I felt that created the wrong mental model. An explicit, manual edit signals ownership and control, so users would reasonably assume they had detached the placement from the global rate. In reality, the underlying reference would still persist, and a future bulk switch would overwrite that change without warning. Essentially, the interface would imply one set of rules while the system followed another, so although locking those values added implementation complexity, it made the system’s behaviour clear and preserved user trust. If a placement needed a different rate, the correct path was to create a new global rate and switch to it.
+
+**\[📸 New Global Base Rate modal / New Global Alternative Rate modal\]** _Base and alternative rate forms. Times and days are the only fields editable after assignment._
+
+## The rate switcher
+
+The rate switcher was the core of the whole solution. It let admins update rates at scale, but only if the interaction made the impact clear before anything changed so it needed to be fully trusted.
+
+Because the switch runs manually, running it ahead of the rate's effective date means new placements created in the interim won't automatically inherit the new rate. Rather than hiding this, we surfaced a persistent banner explaining it and prompting the user to run the operation again on or after the effective date. That was a legitimate possibility, so it was surfaced clearly.
+
+The strategic value of the switcher wasn’t just that it was fast, it was that it made large-scale rate changes feel controllable. When an admin ran a switch, the system identified placements still carrying the old rate and inserted new replacement rates, rather than altering existing ones. That made the operation safe to rerun and the outcome easy to predict, while preserving audit integrity and keeping performance strong.
+
+**\[📸 Bulk Rate Switcher modal — with future date banner edge case\]** _Future date banner — a reminder to re-run the switch once the effective date arrives._
+
+Before the switch runs, admins see how many live placements will be affected. I chose to show the count rather than a full list, because with potentially hundreds of placements involved, listing every item would have made the modal harder to scan without giving users much more confidence. The count was enough to help them sense-check the scale of the change against what they expected, while keeping the interaction clear and manageable.
+
+**\[📸 Affected placements confirmation modal\]** _Confirmation showing affected jobs and placements before the switch runs._
+
+## Rates on placements
+
+Once assigned, global rates appeared in the placement's rate list alongside any custom rates and these were denoted with an icon. Rates that were switched ahead of time also show a clear future indicator so admins could see what was coming without confusion.
+
+**\[📸 Select global rate on placement\]** _The same folder structure, filtered to rates matching the placement's currency._
+
+**\[📸 Manage Rates on placement — tree + rates list with global indicators, historic and future rates\]** _Global rates marked with a linked icon. Scheduled future rates clearly indicated._
+
+## Outcome
+
+This feature turned rate updates from a manual compliance risk into a controlled bulk operation. What previously took hours could now be done in under a minute, without the risk of missing placements. Adoption was also strong. In the 18 months after launch, customers created more than 4,500 global rates, indicating that agencies were using the system to manage complex rate structures centrally and at scale.
+
+Commercially, this did not eliminate the \~$450k ARR risk on its own, but it reduced a meaningful source of it. It closed a clear product gap for staffing agencies and, according to the sales team, materially improved conversations with temp agencies.
+
+## What I'd do differently
+
+The language of “switching” rates was technically accurate, but it didn’t quite match how users thought about the task. In practice, admins weren’t thinking about swapping one object for another, they were trying to update placement pay safely at scale. Framing the action as an update would have better aligned the interface with user intent and reduced the translation users had to do.
+
+I also think there was an opportunity to make the workflow more _end-to-end_. To keep scope controlled, we separated rate creation from the bulk update flow. Users first created the destination rate, then selected it in the switcher, which was a reasonable sequence decision, but it introduced avoidable friction. A better version of the experience would have let admins create the new rate inline as part of the operation, reducing context switching and making the flow feel more joined up.
+
+More broadly, this project reminded me that the quality of the design depended on how well I understood the system underneath it. Although I already knew the rate architecture well, this project has lots of moving parts, so I still had to go deeper into how historical records, audit constraints, and future updates behaved in the backend. Once I had that, I could make decisions much more accurately and sense-check my own thinking as I went, instead of designing around unknowns.
